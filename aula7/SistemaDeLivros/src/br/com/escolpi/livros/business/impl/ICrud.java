@@ -1,27 +1,28 @@
 package br.com.escolpi.livros.business.impl;
 
-import br.com.escolpi.livros.modelo.rh.Vendedor;
+import java.io.File;
+import java.io.IOException;
 
-public interface ICrud {
+public interface ICrud<T> {
 
 	final int ID_INICIAL = 1000;
 
 	// C - create/criar
-	Vendedor incluir(Vendedor funcionario);
+	T incluir(T funcionario);
 
 	// R - read/ler
-	Vendedor obter(int id);
+	T obter(int id);
 
-	Vendedor[] listar();
+	T[] listar();
 
 	// U - update/atualizar
-	Vendedor alterar(Vendedor funcionario);
+	T alterar(T funcionario);
 
 	// D - delete/excluir
 	void excluir(int id);
 
 	// Método para obter o data source da classe
-	String getDataSource(String datasource);
+	File getDataSource(String datasource) throws IOException;
 
 	int proximoId();
 }
