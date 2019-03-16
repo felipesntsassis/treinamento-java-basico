@@ -7,21 +7,22 @@ import java.util.Scanner;
 
 import br.com.escolpi.livros.business.impl.ICrud;
 import br.com.escolpi.livros.modelo.rh.Vendedor;
-import br.com.escolpi.livros.modelo.serializer.VendedorSerializer;
+import br.com.escolpi.livros.modelo.serializer.ModeloSerializer;
 import br.com.escolpi.livros.util.Mensagem;
 
-public class VendedorBusiness implements ICrud {
+public class VendedorBusiness extends Business<Vendedor> implements ICrud<Vendedor> {
 
-	private static final String DS_VENDEDORES = "Vendedores";
+	private static final String DATASOURCE = "Vendedores";
+	private ModeloSerializer<Vendedor> modeloSerializer = new ModeloSerializer<>();
 
 	@Override
 	public Vendedor incluir(Vendedor funcionario) {
-		File vendedores = new File(getDataSource(DS_VENDEDORES));
 		try {
+			File vendedores = getDataSource(DATASOURCE);
 			funcionario.setId(proximoId());
 			FileOutputStream output = new FileOutputStream(vendedores, true);
 			PrintStream gravador = new PrintStream(output);
-			gravador.println(VendedorSerializer.vendedorParaTexto(funcionario));
+			gravador.println(modeloSerializer.modeloParaTexto(funcionario));
 			gravador.close();
 			System.out.println(Mensagem.getInclusao("Vendedor"));
 		} catch (Exception e) {
@@ -42,10 +43,11 @@ public class VendedorBusiness implements ICrud {
 		return null;
 	}
 
+	@SuppressWarnings("resource")
 	@Override
 	public Vendedor[] listar() {
 		try {
-			Scanner scanner = new Scanner(new File(getDataSource(DS_VENDEDORES)));
+			Scanner scanner = new Scanner(getDataSource(DATASOURCE));
 			int count = 0;
 
 			while (scanner.hasNextLine()) {
@@ -53,13 +55,13 @@ public class VendedorBusiness implements ICrud {
 				scanner.nextLine();
 			}
 
-			scanner = new Scanner(new File(getDataSource(DS_VENDEDORES)));
+			scanner = new Scanner(getDataSource(DATASOURCE));
 			Vendedor[] registros = new Vendedor[count];
 			count = 0;
 
 			while (scanner.hasNextLine()) {
 				String registro = scanner.nextLine();
-				registros[count] = VendedorSerializer.textoParaVendedor(registro);
+				registros[count] = modeloSerializer.textoParaModelo(registro, new Vendedor());
 				count ++;
 			}
 
@@ -87,11 +89,11 @@ public class VendedorBusiness implements ICrud {
 					}
 				}
 
-				File datasource = new File(getDataSource(DS_VENDEDORES));
+				File datasource = getDataSource(DATASOURCE);
 				PrintStream gravador = new PrintStream(datasource);
 
 				for (Vendedor vendedor : vendedores) {
-					gravador.println(VendedorSerializer.vendedorParaTexto(vendedor));
+					gravador.println(modeloSerializer.modeloParaTexto(vendedor));
 				}
 
 				gravador.close();
@@ -124,11 +126,13 @@ public class VendedorBusiness implements ICrud {
 					}
 				}
 
-				File datasource = new File(getDataSource(DS_VENDEDORES));
+				File datasource = getDataSource(DATASOURCE);
 				PrintStream gravador = new PrintStream(datasource);
 
 				for (Vendedor vendedor : vendedores) {
-					gravador.println(VendedorSerializer.vendedorParaTexto(vendedor));
+					if (vendedor != null) {
+						gravador.println(modeloSerializer.modeloParaTexto(vendedor));
+					}
 				}
 
 				gravador.close();
@@ -137,11 +141,6 @@ public class VendedorBusiness implements ICrud {
 		} catch (Exception e) {
 			System.out.println(Mensagem.getErro("Erro excluir Vendedor: " + e.getMessage()));
 		}
-	}
-
-	@Override
-	public String getDataSource(String datasource) {
-		return "datasource" + File.separator + "cadastros" + File.separator + datasource + ".tb";
 	}
 
 	@Override
