@@ -3,12 +3,11 @@ package br.com.escolpi.livros.business;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
-import java.lang.reflect.Field;
 import java.util.Scanner;
 
 import br.com.escolpi.livros.business.impl.ICrud;
-import br.com.escolpi.livros.modelo.Data;
 import br.com.escolpi.livros.modelo.rh.Vendedor;
+import br.com.escolpi.livros.modelo.serializer.VendedorSerializer;
 import br.com.escolpi.livros.util.Mensagem;
 
 public class VendedorBusiness implements ICrud {
@@ -22,18 +21,7 @@ public class VendedorBusiness implements ICrud {
 			funcionario.setId(proximoId());
 			FileOutputStream output = new FileOutputStream(vendedores, true);
 			PrintStream gravador = new PrintStream(output);
-
-			StringBuilder registro = new StringBuilder();
-			String template = "%s:%s|";
-
-			for (Field field : funcionario.getClass().getSuperclass().getDeclaredFields()) {
-				boolean accessible = field.isAccessible();
-				field.setAccessible(true);
-				registro.append(String.format(template, field.getName(), field.get(funcionario)));
-				field.setAccessible(accessible);
-			}
-
-			gravador.println(registro.substring(0, registro.lastIndexOf("|")));
+			gravador.println(VendedorSerializer.vendedorParaTexto(funcionario));
 			gravador.close();
 			System.out.println(Mensagem.getInclusao("Vendedor"));
 		} catch (Exception e) {
@@ -71,47 +59,19 @@ public class VendedorBusiness implements ICrud {
 
 			while (scanner.hasNextLine()) {
 				String registro = scanner.nextLine();
-				String[] tupla = registro.split("\\|");
-				Vendedor vendedor = new Vendedor();
-
-				for (String coluna : tupla) {
-					String[] campo = coluna.split(":");
-					Field field = vendedor.getClass().getSuperclass().getDeclaredField(campo[0]);
-					boolean accessible = field.isAccessible();
-					field.setAccessible(true);
-
-					if (field.getType().isAssignableFrom(Data.class)) {
-						String[] data = campo[1].split("/");
-						field.set(vendedor, new Data(
-								Integer.valueOf(data[0]), 
-								Integer.valueOf(data[1]), 
-								Integer.valueOf(data[2])
-							)
-						);
-					} else if (field.getType().getName() == "int") {
-						field.set(vendedor, Integer.valueOf(campo[1]));
-					} else if (field.getType().getName() == "double") {
-						field.set(vendedor, Double.valueOf(campo[1]));
-					} else {
-						field.set(vendedor, campo[1]);
-					}
-
-					field.setAccessible(accessible);
-				}
-
-				registros[count] = vendedor;
+				registros[count] = VendedorSerializer.textoParaVendedor(registro);
 				count ++;
 			}
 
 			scanner.close();
-			System.out.println(Mensagem.getConsulta("Vendedor(es"));
+			System.out.println(Mensagem.getConsulta("Vendedor(es)"));
 
 			return registros;
 		} catch (Exception e) {
 			System.out.println(Mensagem.getErro("Ao carregar listar Vendedor(es): " + e.getMessage()));
 		}
 
-		return null;
+		return new Vendedor[] {};
 	}
 
 	@Override
@@ -130,20 +90,8 @@ public class VendedorBusiness implements ICrud {
 				File datasource = new File(getDataSource(DS_VENDEDORES));
 				PrintStream gravador = new PrintStream(datasource);
 
-				
-				String template = "%s:%s|";
-
 				for (Vendedor vendedor : vendedores) {
-					StringBuilder registro = new StringBuilder();
-
-					for (Field field : vendedor.getClass().getSuperclass().getDeclaredFields()) {
-						boolean accessible = field.isAccessible();
-						field.setAccessible(true);
-						registro.append(String.format(template, field.getName(), field.get(vendedor)));
-						field.setAccessible(accessible);
-					}
-
-					gravador.println(registro.substring(0, registro.lastIndexOf("|")));
+					gravador.println(VendedorSerializer.vendedorParaTexto(vendedor));
 				}
 
 				gravador.close();
@@ -163,7 +111,7 @@ public class VendedorBusiness implements ICrud {
 			Vendedor exclusao = obter(id);
 
 			if (exclusao == null) {
-				throw new IllegalArgumentException("Registro com ID " + id + " não encontrado!");
+				throw new IllegalArgumentException("Registro com ID " + id + " não foi encontrado!");
 			}
 
 			Vendedor[] vendedores = listar();
@@ -177,22 +125,10 @@ public class VendedorBusiness implements ICrud {
 				}
 
 				File datasource = new File(getDataSource(DS_VENDEDORES));
-				FileOutputStream output = new FileOutputStream(datasource);
-				PrintStream gravador = new PrintStream(output);
-
-				String template = "%s:%s|";
+				PrintStream gravador = new PrintStream(datasource);
 
 				for (Vendedor vendedor : vendedores) {
-					if (vendedor != null) {
-						StringBuilder registro = new StringBuilder();
-						for (Field field : vendedor.getClass().getSuperclass().getDeclaredFields()) {
-							boolean accessible = field.isAccessible();
-							field.setAccessible(true);
-							registro.append(String.format(template, field.getName(), field.get(vendedor)));
-							field.setAccessible(accessible);
-						}
-						gravador.println(registro.substring(0, registro.lastIndexOf("|")));
-					}
+					gravador.println(VendedorSerializer.vendedorParaTexto(vendedor));
 				}
 
 				gravador.close();
