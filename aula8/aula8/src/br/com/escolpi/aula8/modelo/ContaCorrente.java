@@ -2,9 +2,9 @@ package br.com.escolpi.aula8.modelo;
 
 public class ContaCorrente implements Comparable<ContaCorrente> {
 
-	private double saldo = 500.50D;
+	private Double saldo = 500.50D;
 
-	public double getSaldo() {
+	public Double getSaldo() {
 		return saldo;
 	}
 
@@ -29,4 +29,5 @@ public class ContaCorrente implements Comparable<ContaCorrente> {
 //
 //		return 0;
 	}
+	
 }
