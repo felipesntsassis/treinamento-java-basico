@@ -16,9 +16,8 @@ public class CategoriaDao extends GenericDao<Categoria> {
 
 	@Override
 	public void adicionar(Categoria categoria) {
-		String sql = "INSERT INTO categorias (descricao) VALUES (?)";
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
+			PreparedStatement stmt = connection.prepareStatement("INSERT INTO categorias (descricao) VALUES (?)");
 			stmt.setString(1, categoria.getDescricao());
 
 			stmt.execute();
@@ -31,9 +30,8 @@ public class CategoriaDao extends GenericDao<Categoria> {
 
 	@Override
 	public void alterar(Categoria entidade) {
-		String sql = "UPDATE categorias SET descricao = ? WHERE id = ?";
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
+			PreparedStatement stmt = connection.prepareStatement("UPDATE categorias SET descricao = ? WHERE id = ?");
 			stmt.setString(1, entidade.getDescricao());
 			stmt.setLong(2, entidade.getId());
 
@@ -48,17 +46,13 @@ public class CategoriaDao extends GenericDao<Categoria> {
 	@Override
 	public List<Categoria> listar() {
 		List<Categoria> categorias = new ArrayList<>();
-		String sql = "SELECT * FROM categorias";
 
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
+			PreparedStatement stmt = connection.prepareStatement("SELECT * FROM categorias ORDER BY id");
 			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				Categoria categoria = new Categoria();
-				categoria.setId(rs.getLong("id"));
-				categoria.setDescricao(rs.getString("descricao"));
-				categorias.add(categoria);
+				categorias.add(popularEntidade(rs));
 			}
 
 			stmt.close();
@@ -72,17 +66,13 @@ public class CategoriaDao extends GenericDao<Categoria> {
 
 	@Override
 	public Categoria obter(Long id) {
-		Categoria categoria = new Categoria();
-		String sql = "SELECT * FROM categorias WHERE id = ?";
-
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
+			PreparedStatement stmt = connection.prepareStatement("SELECT * FROM categorias WHERE id = ?");
 			stmt.setLong(1, id);
 			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				categoria.setId(rs.getLong("id"));
-				categoria.setDescricao(rs.getString("descricao"));
+				return popularEntidade(rs);
 			}
 
 			stmt.close();
@@ -91,14 +81,13 @@ public class CategoriaDao extends GenericDao<Categoria> {
 			throw new RuntimeException(e);
 		}
 
-		return categoria;
+		return null;
 	}
 
 	@Override
 	public void remover(Long id) {
-		String sql = "DELETE FROM categorias WHERE id = ?";
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
+			PreparedStatement stmt = connection.prepareStatement("DELETE FROM categorias WHERE id = ?");
 			stmt.setLong(1, id);
 
 			stmt.execute();
@@ -107,6 +96,15 @@ public class CategoriaDao extends GenericDao<Categoria> {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@Override
+	public Categoria popularEntidade(ResultSet rs) throws SQLException {
+		Categoria categoria = new Categoria();
+		categoria.setId(rs.getLong("id"));
+		categoria.setDescricao(rs.getString("descricao"));
+
+		return categoria;
 	}
 
 }

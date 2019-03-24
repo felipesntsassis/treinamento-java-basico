@@ -18,7 +18,7 @@ public class TestaInsereComDao {
 		cliente.getDataNascimento().set(Calendar.YEAR, 1985);
 
 		ClienteDao clienteDao = new ClienteDao();
-		clienteDao.adiciona(cliente);
+		clienteDao.adicionar(cliente);
 		
 		System.out.println("Cliente cadastrado com sucesso!");
 	}

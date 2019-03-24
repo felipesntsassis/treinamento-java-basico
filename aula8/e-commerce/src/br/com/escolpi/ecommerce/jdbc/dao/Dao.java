@@ -1,17 +1,21 @@
 package br.com.escolpi.ecommerce.jdbc.dao;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public interface Dao<T> {
 
-	public void adicionar(T entidade);
+	void adicionar(T entidade);
 
-	public void alterar(T entidade);
+	void alterar(T entidade);
 
-	public List<T> listar();
+	List<T> listar();
 
-	public T obter(Long id);
+	T obter(Long id);
 
-	public void remover(Long id);
+	void remover(Long id);
+
+	T popularEntidade(ResultSet rs) throws SQLException;
 
 }

@@ -24,7 +24,7 @@ public class TestaInsereProduto {
 				produto.setDescricao(faker.food().ingredient());
 				produto.setPreco(faker.number().randomDouble(2, 5, 150));
 				produto.setQuantidade(faker.number().randomDigit());
-				produtoDao.adiciona(produto);
+				produtoDao.adicionar(produto);
 			}
 		});
 	}
