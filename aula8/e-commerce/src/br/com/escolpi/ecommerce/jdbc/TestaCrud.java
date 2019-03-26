@@ -9,14 +9,14 @@ public interface TestaCrud {
 	final static int TOTAL_REGISTROS = 10;
 	final static Faker faker = new Faker(new Locale("pt-BR"));
 
-	void criar();
+	public void criar();
 
-	void obter();
+	public void obter();
 
-	void alterar();
+	public void alterar();
 
-	void remover();
+	public void remover();
 
-	void listar();
+	public void listar();
 
 }
