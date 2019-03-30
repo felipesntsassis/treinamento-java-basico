@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.escolpi.ecommerce.modelo.Categoria;
 import br.com.escolpi.ecommerce.modelo.Produto;
 
 public class TestaConsulta {
@@ -21,7 +22,7 @@ public class TestaConsulta {
 		while (rs.next()) {
 			Produto produto = new Produto();
 			produto.setId(rs.getLong("id"));
-			produto.setCategoriaId(rs.getLong("categoria_id"));
+			produto.setCategoria(new Categoria(rs.getLong("categoria_id")));
 			produto.setDescricao(rs.getString("descricao"));
 			produto.setQuantidade(rs.getInt("quantidade"));
 			produto.setPreco(rs.getDouble("preco"));
@@ -33,7 +34,7 @@ public class TestaConsulta {
 		
 		produtos.forEach(produto -> {
 			System.out.println("ID:				" + produto.getId());
-			System.out.println("Categoria ID:	" + produto.getCategoriaId());
+			System.out.println("Categoria ID:	" + produto.getCategoria());
 			System.out.println("Descrição:		" + produto.getDescricao());
 			System.out.println("Quantidade:		" + produto.getQuantidade());
 			System.out.println("Preço (R$):		" + produto.getPreco());

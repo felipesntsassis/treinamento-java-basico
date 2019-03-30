@@ -12,7 +12,7 @@ public class VendedorDao extends GenericDao<Vendedor> {
 
 	@Override
 	public void adicionar(Vendedor entidade) {
-		String sql = "INSERT INTO vendedores (nome, email, departamento, percentual_comissao) "
+		String sql = "INSERT INTO vendedores (nome, email, departamento, perc_comissao) "
 				+ "VALUES (?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
@@ -30,7 +30,7 @@ public class VendedorDao extends GenericDao<Vendedor> {
 
 	@Override
 	public void alterar(Vendedor entidade) {
-		String sql = "UPDATE vendedores SET nome = ?, email = ?, departamento = ?, percentual_comissao = ? "
+		String sql = "UPDATE vendedores SET nome = ?, email = ?, departamento = ?, perc_comissao = ? "
 				+ "WHERE id = ?";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
@@ -108,7 +108,7 @@ public class VendedorDao extends GenericDao<Vendedor> {
 		vendedor.setNome(rs.getString("nome"));
 		vendedor.setEmail(rs.getString("email"));
 		vendedor.setDepartamento(rs.getString("departamento"));
-		vendedor.setPercentualComissao(rs.getDouble("percentual_comissao"));
+		vendedor.setPercentualComissao(rs.getDouble("perc_comissao"));
 
 		return vendedor;
 	}

@@ -3,7 +3,7 @@ package br.com.escolpi.ecommerce.modelo;
 public class Produto {
 
 	private Long id;
-	private Long categoriaId;
+	private Categoria categoria;
 	private String descricao;
 	private Integer quantidade;
 	private Double preco;
@@ -16,12 +16,12 @@ public class Produto {
 		this.id = id;
 	}
 
-	public Long getCategoriaId() {
-		return categoriaId;
+	public Categoria getCategoria() {
+		return categoria;
 	}
 
-	public void setCategoriaId(Long categoriaId) {
-		this.categoriaId = categoriaId;
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
 	}
 
 	public String getDescricao() {

@@ -8,6 +8,7 @@ import java.util.Locale;
 import com.github.javafaker.Faker;
 
 import br.com.escolpi.ecommerce.jdbc.dao.ProdutoDao;
+import br.com.escolpi.ecommerce.modelo.Categoria;
 import br.com.escolpi.ecommerce.modelo.Produto;
 
 public class TestaInsereProduto {
@@ -20,7 +21,7 @@ public class TestaInsereProduto {
 		categoriasId.forEach(categoria -> {
 			for (int i = 0; i < 3; i++) {
 				Produto produto = new Produto();
-				produto.setCategoriaId(categoria);
+				produto.setCategoria(new Categoria(categoria));
 				produto.setDescricao(faker.food().ingredient());
 				produto.setPreco(faker.number().randomDouble(2, 5, 150));
 				produto.setQuantidade(faker.number().randomDigit());

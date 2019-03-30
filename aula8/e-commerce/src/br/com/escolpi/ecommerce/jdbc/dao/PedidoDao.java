@@ -13,8 +13,13 @@ import br.com.escolpi.ecommerce.modelo.Pedido;
 
 public class PedidoDao extends GenericDao<Pedido> {
 
+	private ClienteDao clienteDao;
+	private VendedorDao vendedorDao;
+
 	public PedidoDao() {
 		super();
+		clienteDao = new ClienteDao();
+		vendedorDao = new VendedorDao();
 	}
 
 	@Override
@@ -23,8 +28,8 @@ public class PedidoDao extends GenericDao<Pedido> {
 				+ "VALUES (?, ?, ?, ?)";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setLong(1, entidade.getVendedorId());
-			stmt.setLong(2, entidade.getClienteId());
+			stmt.setLong(1, entidade.getVendedor().getId());
+			stmt.setLong(2, entidade.getCliente().getId());
 			stmt.setDate(3, new Date(entidade.getDataPedido().getTimeInMillis()));
 			stmt.setInt(4, entidade.getSituacao().ordinal());
 			
@@ -41,8 +46,8 @@ public class PedidoDao extends GenericDao<Pedido> {
 				+ "WHERE id = ?";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setLong(1, entidade.getVendedorId());
-			stmt.setLong(2, entidade.getClienteId());
+			stmt.setLong(1, entidade.getVendedor().getId());
+			stmt.setLong(2, entidade.getCliente().getId());
 			stmt.setDate(3, new Date(entidade.getDataPedido().getTimeInMillis()));
 			stmt.setInt(4, entidade.getSituacao().ordinal());
 			stmt.setLong(5, entidade.getId());
@@ -107,12 +112,31 @@ public class PedidoDao extends GenericDao<Pedido> {
 		}
 	}
 
+	public Pedido obterUltimoPedido() {
+		String sql = "SELECT * FROM pedidos ORDER BY id DESC LIMIT 1";
+
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				return popularEntidade(rs);
+			}
+
+			stmt.close();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+
+		return null;
+	}
+
 	@Override
 	public Pedido popularEntidade(ResultSet rs) throws SQLException {
 		Pedido pedido = new Pedido();
 		pedido.setId(rs.getLong("id"));
-		pedido.setVendedorId(rs.getLong("vendedor_id"));
-		pedido.setClienteId(rs.getLong("cliente_id"));
+		pedido.setVendedor(vendedorDao.obter(rs.getLong("vendedor_id")));
+		pedido.setCliente(clienteDao.obter(rs.getLong("cliente_id")));
 		// TODO: Criar método utilitário para converter data para calendar
 		Calendar dataPedido = Calendar.getInstance();
 		dataPedido.setTime(rs.getDate("data_pedido"));

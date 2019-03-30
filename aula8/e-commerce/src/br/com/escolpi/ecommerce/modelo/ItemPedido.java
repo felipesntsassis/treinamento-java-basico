@@ -3,8 +3,8 @@ package br.com.escolpi.ecommerce.modelo;
 public class ItemPedido {
 
 	private Long id;
-	private Long pedidoId;
-	private Long produtoId;
+	private Pedido pedido;
+	private Produto produto;
 	private Integer quantidade;
 	private Double valor;
 
@@ -16,20 +16,20 @@ public class ItemPedido {
 		this.id = id;
 	}
 
-	public Long getPedidoId() {
-		return pedidoId;
+	public Pedido getPedido() {
+		return pedido;
 	}
 
-	public void setPedidoId(Long pedidoId) {
-		this.pedidoId = pedidoId;
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
 	}
 
-	public Long getProdutoId() {
-		return produtoId;
+	public Produto getProduto() {
+		return produto;
 	}
 
-	public void setProdutoId(Long produtoId) {
-		this.produtoId = produtoId;
+	public void setProduto(Produto produto) {
+		this.produto = produto;
 	}
 
 	public Integer getQuantidade() {
@@ -46,5 +46,9 @@ public class ItemPedido {
 
 	public void setValor(Double valor) {
 		this.valor = valor;
+	}
+
+	public void calcularValor() {
+		valor = produto.getPreco() * quantidade;
 	}
 }

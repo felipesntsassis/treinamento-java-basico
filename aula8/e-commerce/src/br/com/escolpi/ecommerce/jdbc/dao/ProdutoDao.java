@@ -10,8 +10,11 @@ import br.com.escolpi.ecommerce.modelo.Produto;
 
 public class ProdutoDao extends GenericDao<Produto> {
 
+	private CategoriaDao categoriaDao;
+
 	public ProdutoDao() {
 		super();
+		categoriaDao = new CategoriaDao();
 	}
 
 	@Override
@@ -20,7 +23,7 @@ public class ProdutoDao extends GenericDao<Produto> {
 				+ "VALUES (?, ?, ?, ?)";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setLong(1, produto.getCategoriaId());
+			stmt.setLong(1, produto.getCategoria().getId());
 			stmt.setString(2, produto.getDescricao());
 			stmt.setInt(3, produto.getQuantidade());
 			stmt.setDouble(4, produto.getPreco());
@@ -38,11 +41,11 @@ public class ProdutoDao extends GenericDao<Produto> {
 				+ "WHERE id = ?";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setLong(1, entidade.getCategoriaId());
+			stmt.setLong(1, entidade.getCategoria().getId());
 			stmt.setString(2, entidade.getDescricao());
 			stmt.setInt(3, entidade.getQuantidade());
 			stmt.setDouble(4, entidade.getPreco());
-			stmt.setLong(4, entidade.getId());
+			stmt.setLong(5, entidade.getId());
 
 			stmt.execute();
 			stmt.close();
@@ -107,7 +110,10 @@ public class ProdutoDao extends GenericDao<Produto> {
 	public Produto popularEntidade(ResultSet rs) throws SQLException {
 		Produto produto = new Produto();
 		produto.setId(rs.getLong("id"));
-		produto.setCategoriaId(rs.getLong("categoria_id"));
+//		Quando tinhamos apenas o ID, populamos desta forma:
+//		produto.setCategoriaId(rs.getLong("categoria_id"));
+//		Porém, trabalhamos com objetos, a prática correta é esta:
+		produto.setCategoria(categoriaDao.obter(rs.getLong("categoria_id")));
 		produto.setDescricao(rs.getString("descricao"));
 		produto.setQuantidade(rs.getInt("quantidade"));
 		produto.setPreco(rs.getDouble("preco"));

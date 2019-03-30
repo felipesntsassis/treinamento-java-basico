@@ -10,8 +10,13 @@ import br.com.escolpi.ecommerce.modelo.ItemPedido;
 
 public class ItemPedidoDao extends GenericDao<ItemPedido> {
 
-	ItemPedidoDao() {
+	private PedidoDao pedidoDao;
+	private ProdutoDao produtoDao;
+
+	public ItemPedidoDao() {
 		super();
+		pedidoDao = new PedidoDao();
+		produtoDao = new ProdutoDao();
 	}
 
 	@Override
@@ -20,8 +25,8 @@ public class ItemPedidoDao extends GenericDao<ItemPedido> {
 				+ "VALUES (?, ?, ?, ?)";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setLong(1, entidade.getPedidoId());
-			stmt.setLong(2, entidade.getProdutoId());
+			stmt.setLong(1, entidade.getPedido().getId());
+			stmt.setLong(2, entidade.getProduto().getId());
 			stmt.setInt(3, entidade.getQuantidade());
 			stmt.setDouble(4, entidade.getValor());
 			
@@ -38,8 +43,8 @@ public class ItemPedidoDao extends GenericDao<ItemPedido> {
 				+ "valor+item = ? WHERE id = ?";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setLong(1, entidade.getPedidoId());
-			stmt.setLong(2, entidade.getProdutoId());
+			stmt.setLong(1, entidade.getPedido().getId());
+			stmt.setLong(2, entidade.getProduto().getId());
 			stmt.setInt(3, entidade.getQuantidade());
 			stmt.setDouble(4, entidade.getValor());
 			stmt.setLong(5, entidade.getId());
@@ -108,8 +113,8 @@ public class ItemPedidoDao extends GenericDao<ItemPedido> {
 	public ItemPedido popularEntidade(ResultSet rs) throws SQLException {
 		ItemPedido item = new ItemPedido();
 		item.setId(rs.getLong("id"));
-		item.setPedidoId(rs.getLong("pedido_id"));
-		item.setProdutoId(rs.getLong("produto_id"));
+		item.setPedido(pedidoDao.obter(rs.getLong("pedido_id")));
+		item.setProduto(produtoDao.obter(rs.getLong("produto_id")));
 		item.setQuantidade(rs.getInt("quantidade"));
 		item.setValor(rs.getDouble("valor_item"));
 

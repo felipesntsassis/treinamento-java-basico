@@ -1,16 +1,18 @@
 package br.com.escolpi.ecommerce.modelo;
 
 import java.util.Calendar;
+import java.util.List;
 
 import br.com.escolpi.ecommerce.enumerador.SituacaoPedido;
 
 public class Pedido {
 
 	private Long id;
-	private Long vendedorId;
-	private Long clienteId;
+	private Vendedor vendedor;
+	private Cliente cliente;
 	private Calendar dataPedido;
 	private SituacaoPedido situacao;
+	private List<ItemPedido> itensPedido;
 
 	public Long getId() {
 		return id;
@@ -20,20 +22,20 @@ public class Pedido {
 		this.id = id;
 	}
 
-	public Long getVendedorId() {
-		return vendedorId;
+	public Vendedor getVendedor() {
+		return vendedor;
 	}
 
-	public void setVendedorId(Long vendedorId) {
-		this.vendedorId = vendedorId;
+	public void setVendedor(Vendedor vendedor) {
+		this.vendedor = vendedor;
 	}
 
-	public Long getClienteId() {
-		return clienteId;
+	public Cliente getCliente() {
+		return cliente;
 	}
 
-	public void setClienteId(Long clienteId) {
-		this.clienteId = clienteId;
+	public void setCliente(Cliente clienteId) {
+		this.cliente = clienteId;
 	}
 
 	public Calendar getDataPedido() {
@@ -50,5 +52,13 @@ public class Pedido {
 
 	public void setSituacao(SituacaoPedido situacao) {
 		this.situacao = situacao;
+	}
+
+	public List<ItemPedido> getItensPedido() {
+		return itensPedido;
+	}
+
+	public void setItensPedido(List<ItemPedido> itensPedido) {
+		this.itensPedido = itensPedido;
 	}
 }
