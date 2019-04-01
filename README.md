@@ -11,3 +11,7 @@ Repositório para armazenar os exemplos de implementação e exercícios do meu 
 ### Aula 7
 
 [Leitura e Escrita de Arquivos - Sistema de Livros](https://github.com/felipesntsassis/treinamento-java-basico/tree/master/aula7/SistemaDeLivros)
+
+### Aula 8
+### Aula 9
+[Projeto E-commerce-web](https://github.com/felipesntsassis/treinamento-java-basico/tree/master/aula9/ecommerce-web)
