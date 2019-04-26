@@ -2,10 +2,7 @@ package br.com.escolpi.ecommerce.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,63 +28,53 @@ public class AdicionaCategoriaServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
-		req.getHeader("Content-type");
-		resp.addHeader("Content-Type", "text/html;charset=UTF-8");
-		PrintWriter out = resp.getWriter();
+		String acao = "adicionada";
 
 		Categoria categoria = new Categoria();
+		String requestId = req.getParameter("id");
+
+		if (requestId != null && requestId != "")
+			categoria.setId(Long.valueOf(requestId));
+
 		categoria.setDescricao(req.getParameter("descricao"));
-		
-		dao.adicionar(categoria);
-		
-		StringBuilder resposta = new StringBuilder();
-		resposta
-			.append("<html>")
-			.append("	<body>")
-			.append("		<h3>Categoria %s cadastrado com sucesso!</h3>")
-			.append("		<a href=\"adiciona-categoria.html\">Nova Categoria</a>")
-			.append("		&nbsp;")
-			.append("		<a href=\"categoria\">Voltar</a>")
-			.append("	</body>")
-			.append("</html>");
-		out.println(String.format(resposta.toString(), categoria.getDescricao()));
+
+		if (categoria.getId() != null && categoria.getId() > 0) {
+			dao.alterar(categoria);
+			acao = "alterada";
+		} else {
+			dao.adicionar(categoria);
+		}
+
+		feedback(acao, resp);
 	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
 				throws ServletException, IOException {
-		resp.addHeader("Content-Type", "text/html;charset=UTF-8");
-		PrintWriter out = resp.getWriter();
-		List<Categoria> categorias = new ArrayList<>();
-		categorias.addAll(dao.listar());
+		String idRequest = req.getParameter("id");
 		
-		out.println("<html>");
-		out.println("	<body>");
-		out.println("		<h3>Categorias</h3>");
-		out.println("		<h5>" + categorias.size() + " registro(s)</h5>");
-		out.println("		<p>");
-		out.println("			<a href=\"adiciona-categoria.html\">Nova Categoria</a>");
-		out.println("		</p>");
-		out.println("		<table border=\"1\" width=\"720\">");
-		out.println("			<thead>");
-		out.println("				<tr>");
-		out.println("					<th width=\"100\">Código</th>");
-		out.println("					<th>Descrição</th>");
-		out.println("				</tr>");
-		out.println("			</thead>");
-		out.println("			<tbody>");
+		if (idRequest == null || idRequest == "") {
+			throw new IllegalArgumentException("Parâmetro ID é obrigatório");
+		}
 
-		categorias.forEach(categoria -> {
-			out.println("			<tr>");
-			out.println("			<td width=\"100\">" + categoria.getId() + "</td>");
-			out.println("			<td>" + categoria.getDescricao() + "</td>");
-			out.println("			<tr>");
-		});
+		dao.remover(Long.valueOf(idRequest));
+		feedback("excluída", resp);
+	}
 
-		out.println("			</tbody>");
-		out.println("		</table>");
-		out.println("	</body");
-		out.println("</html>");
+	private void feedback(String acao, HttpServletResponse resp) throws IOException {
+		resp.addHeader("Content-Type", "text/html; charset=UTF-8");
+		PrintWriter out = resp.getWriter();
+		StringBuilder resposta = new StringBuilder();
+		resposta
+			.append("<html>")
+			.append("	<body>")
+			.append("		<h3>Categoria %s com sucesso!</h3>")
+			.append("		<a href=\"/ecommerce-web/categoria/editar-scriptlet.jsp\">Nova Categoria</a>")
+			.append("		&nbsp;")
+			.append("		<a href=\"/ecommerce-web/categoria/lista-scriptlet.jsp\">Voltar</a>")
+			.append("	</body>")
+			.append("</html>");
+		out.println(String.format(resposta.toString(), acao));
 	}
 
 }

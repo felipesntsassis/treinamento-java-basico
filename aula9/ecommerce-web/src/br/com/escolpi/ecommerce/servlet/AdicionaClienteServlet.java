@@ -58,17 +58,17 @@ public class AdicionaClienteServlet extends HttpServlet {
 			dao.adicionar(cliente);
 		}
 
-		feedback("Cliente " + acao + " com sucesso!", resp);
+		feedback(acao, resp);
 	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
 		if (req.getParameter("id") == null)
-			throw new IllegalArgumentException("Parâmetro ID obrigatório");
+			throw new IllegalArgumentException("Parâmetro ID é obrigatório");
 		
 		dao.remover(Long.valueOf(req.getParameter("id")));
-		feedback("Cliente excluído com sucesso!", resp);
+		feedback("excluído", resp);
 	}
 //	
 //	@Override
@@ -114,20 +114,20 @@ public class AdicionaClienteServlet extends HttpServlet {
 //		out.println("</html>");
 //	}
 
-	private void feedback(String msg, HttpServletResponse resp) throws IOException {
+	private void feedback(String acao, HttpServletResponse resp) throws IOException {
 		resp.addHeader("Content-Type", "text/html; charset=UTF-8");
 		PrintWriter out = resp.getWriter();
 		StringBuilder resposta = new StringBuilder();
 		resposta
 			.append("<html>")
 			.append("	<body>")
-			.append("		<h3>%s</h3>")
+			.append("		<h3>Cliente %s com sucesso!</h3>")
 			.append("		<a href=\"/ecommerce-web/cliente/editar-scriptlet.jsp\">Novo Cliente</a>")
 			.append("		&nbsp;")
 			.append("		<a href=\"/ecommerce-web/cliente/lista-scriptlet.jsp\">Voltar</a>")
 			.append("	</body>")
 			.append("</html>");
-		out.println(String.format(resposta.toString(), msg));
+		out.println(String.format(resposta.toString(), acao));
 	}
 
 }

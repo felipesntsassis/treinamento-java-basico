@@ -11,6 +11,7 @@ public class ConnectionFactory {
 	public static Connection getConnection() {
 		try {
 			DriverManager.registerDriver(new Driver());
+			DriverManager.setLoginTimeout(0);
 			return DriverManager.getConnection("jdbc:mysql://localhost/ecommerce", "root", "q1w2e3r4");
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
