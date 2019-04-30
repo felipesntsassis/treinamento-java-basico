@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import br.com.escolpi.ecommerce.jdbc.dao.ClienteDao;
 import br.com.escolpi.ecommerce.modelo.Cliente;
 
-@WebServlet("/cliente")
+@WebServlet("/admin/cliente")
 public class AdicionaClienteServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -7974124277262901066L;
@@ -70,49 +70,6 @@ public class AdicionaClienteServlet extends HttpServlet {
 		dao.remover(Long.valueOf(req.getParameter("id")));
 		feedback("excluído", resp);
 	}
-//	
-//	@Override
-//	protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
-//			throws ServletException, IOException {
-//		resp.addHeader("Content-Type", "text/html;charset=UTF-8");
-//		PrintWriter out = resp.getWriter();
-//		List<Cliente> clientes = new ArrayList<>();
-//		clientes.addAll(dao.listar());
-//		
-//		out.println("<html>");
-//		out.println("	<body>");
-//		out.println("		<h3>Clientes</h3>");
-//		out.println("		<h5>" + clientes.size() + " registro(s)</h5>");
-//		out.println("		<p>");
-//		out.println("			<a href=\"adiciona-cliente.html\">Novo Cliente</a>");
-//		out.println("		</p>");
-//		out.println("		<table border=\"1\" width=\"720\">");
-//		out.println("			<thead>");
-//		out.println("				<tr>");
-//		out.println("					<th width=\"100\">Código</th>");
-//		out.println("					<th>Nome</th>");
-//		out.println("					<th>E-mail</th>");
-//		out.println("					<th>Endereço</th>");
-//		out.println("					<th>Data de Nascimento</th>");
-//		out.println("				</tr>");
-//		out.println("			</thead>");
-//		out.println("			<tbody>");
-//		
-//		clientes.forEach(cliente -> {
-//			out.println("			<tr>");
-//			out.println("				<td width=\"100\">" + cliente.getId() + "</td>");
-//			out.println("				<td>" + cliente.getNome() + "</td>");
-//			out.println("				<td>" + cliente.getEmail() + "</td>");
-//			out.println("				<td>" + cliente.getEndereco() + "</td>");
-//			out.println("				<td>" + DateUtil.parseToString(cliente.getDataNascimento(), "dd/MM/yyyy") + "</td>");
-//			out.println("			<tr>");
-//		});
-//		
-//		out.println("			</tbody>");
-//		out.println("		</table>");
-//		out.println("	</body");
-//		out.println("</html>");
-//	}
 
 	private void feedback(String acao, HttpServletResponse resp) throws IOException {
 		resp.addHeader("Content-Type", "text/html; charset=UTF-8");
@@ -122,9 +79,9 @@ public class AdicionaClienteServlet extends HttpServlet {
 			.append("<html>")
 			.append("	<body>")
 			.append("		<h3>Cliente %s com sucesso!</h3>")
-			.append("		<a href=\"/ecommerce-web/cliente/editar-scriptlet.jsp\">Novo Cliente</a>")
+			.append("		<a href=\"/ecommerce-web/admin/cliente/editar-scriptlet.jsp\">Novo Cliente</a>")
 			.append("		&nbsp;")
-			.append("		<a href=\"/ecommerce-web/cliente/lista-scriptlet.jsp\">Voltar</a>")
+			.append("		<a href=\"/ecommerce-web/admin/cliente/lista-scriptlet.jsp\">Voltar</a>")
 			.append("	</body>")
 			.append("</html>");
 		out.println(String.format(resposta.toString(), acao));

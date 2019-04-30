@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(
 	name = "homeServlet",
-	urlPatterns = { "/home", "/inicio" },
+	urlPatterns = { "/admin/home", "/inicio" },
 	initParams = {
 			@WebInitParam(name = "param1", value = "valor 1"),
 			@WebInitParam(name = "param2", value = "valor 2")

@@ -16,8 +16,8 @@ import br.com.escolpi.ecommerce.modelo.Produto;
 /**
  * Servlet implementation class ProdutoServlet
  */
-@WebServlet(name = "produto", urlPatterns = { "/produto" })
-public class ProdutoServlet extends HttpServlet {
+@WebServlet(name = "produto", urlPatterns = { "/admin/produto" })
+public class AdicionaProdutoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private ProdutoDao dao = new ProdutoDao();
@@ -77,9 +77,9 @@ public class ProdutoServlet extends HttpServlet {
 			.append("<html>")
 			.append("	<body>")
 			.append("		<h3>Produto %s com sucesso!</h3>")
-			.append("		<a href=\"/ecommerce-web/produto/editar-scriptlet.jsp\">Novo Produto</a>")
+			.append("		<a href=\"/ecommerce-web/admin/produto/editar-scriptlet.jsp\">Novo Produto</a>")
 			.append("		&nbsp;")
-			.append("		<a href=\"/ecommerce-web/produto/lista-scriptlet.jsp\">Voltar</a>")
+			.append("		<a href=\"/ecommerce-web/admin/produto/lista-scriptlet.jsp\">Voltar</a>")
 			.append("	</body>")
 			.append("</html>");
 		out.println(String.format(resposta.toString(), acao));

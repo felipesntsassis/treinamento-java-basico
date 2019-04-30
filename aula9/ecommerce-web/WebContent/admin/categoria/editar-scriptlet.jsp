@@ -6,6 +6,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>E-Commerce: Cadastro de Categorias</title>
+		<link href="/ecommerce-web/assets/css/ecommerce.css" rel="stylesheet">
 	</head>
 	<body>
 		<%
@@ -20,7 +21,7 @@
 			boolean edicao = (categoria.getId() != null && categoria.getId() > 0);
 		%>
 		<h3><%=edicao ? "Editar" : "Cadastrar" %> Categoria</h3>
-		<form action="/ecommerce-web/categoria" method="POST">
+		<form action="/ecommerce-web/admin/categoria" method="POST">
 			<% if (edicao) { %>
 				<input type="hidden" name="id" value="<%=categoria.getId() %>">
 			<% } %>

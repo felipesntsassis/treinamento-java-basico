@@ -9,6 +9,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>E-Commerce: Cadastro de Produtos</title>
+		<link href="/ecommerce-web/assets/css/ecommerce.css" rel="stylesheet">
 	</head>
 	<body>
 		<%
@@ -23,7 +24,7 @@
 			boolean edicao = (produto.getId() != null && produto.getId() > 0);
 		%>
 		<h3><%=edicao ? "Editar" : "Cadastrar" %> Produto</h3>
-		<form action="/ecommerce-web/produto" method="POST">
+		<form action="/ecommerce-web/admin/produto" method="POST">
 			<% if (edicao) { %>
 				<input type="hidden" name="id" value="<%=produto.getId() %>">
 			<% } %>

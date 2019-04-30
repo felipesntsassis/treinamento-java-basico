@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import br.com.escolpi.ecommerce.jdbc.dao.CategoriaDao;
 import br.com.escolpi.ecommerce.modelo.Categoria;
 
-@WebServlet(name="categoriaServlet", urlPatterns = "/categoria")
+@WebServlet(name="categoriaServlet", urlPatterns = "/admin/categoria")
 public class AdicionaCategoriaServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -6107830990774324951L;
@@ -69,9 +69,9 @@ public class AdicionaCategoriaServlet extends HttpServlet {
 			.append("<html>")
 			.append("	<body>")
 			.append("		<h3>Categoria %s com sucesso!</h3>")
-			.append("		<a href=\"/ecommerce-web/categoria/editar-scriptlet.jsp\">Nova Categoria</a>")
+			.append("		<a href=\"/ecommerce-web/admin/categoria/editar-scriptlet.jsp\">Nova Categoria</a>")
 			.append("		&nbsp;")
-			.append("		<a href=\"/ecommerce-web/categoria/lista-scriptlet.jsp\">Voltar</a>")
+			.append("		<a href=\"/ecommerce-web/admin/categoria/lista-scriptlet.jsp\">Voltar</a>")
 			.append("	</body>")
 			.append("</html>");
 		out.println(String.format(resposta.toString(), acao));

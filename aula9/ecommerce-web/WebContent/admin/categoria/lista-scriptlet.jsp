@@ -5,19 +5,23 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	<meta charset="UTF-8">
-	<title>E-Commerce: Cadastro de Categorias</title>
+		<meta charset="UTF-8">
+		<title>E-Commerce: Cadastro de Categorias</title>
+		<link href="/ecommerce-web/assets/css/ecommerce.css" rel="stylesheet">
 	</head>
 	<body>
 		<h3>Cadastro de Categorias</h3>
-		<p>
-			<a href="editar-scriptlet.jsp">Nova Categoria</a>
-		</p>
-		<table border="1" width="750">
+		<nav>
+			<ul>
+				<li><a href="editar-scriptlet.jsp">Nova Categoria</a></li>
+				<li><a href="/ecommerce-web/">Voltar para Home</a></li>
+			</ul>
+		</nav>
+		<table border="1">
 			<thead>
 				<tr>
 					<th>Descrição</th>
-					<th width="80">Opções</th>
+					<th>Opções</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -29,9 +33,9 @@
 				%>
 					<tr>
 						<td><%=categoria.getDescricao()%></td>
-						<td width="80">
+						<td>
 							<button type="button" 
-								onclick="irPara('/ecommerce-web/categoria/editar-scriptlet.jsp?id=<%=categoria.getId()%>')">
+								onclick="irPara('/ecommerce-web/admin/categoria/editar-scriptlet.jsp?id=<%=categoria.getId()%>')">
 								Editar
 							</button>
 							<br>
@@ -50,7 +54,7 @@
 	<script>
 		const confirmaExclusao = (id) => {
 			if (confirm('Deseja excluir esta Categoria?')) {
-				irPara('/ecommerce-web/categoria?id=' + id);
+				irPara('/ecommerce-web/admin/categoria?id=' + id);
 			}
 		};
 	</script>

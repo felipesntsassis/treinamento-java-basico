@@ -1,0 +1,32 @@
+/* HTML padrão */
+body {
+	margin: 15px;
+	font-family: Arial, Heveltica, sans-sefif;
+	font-size: 1em;
+}
+
+/* Navegação */
+nav > ul {
+	list-style: none;
+	list-style-position: outside;
+	padding: 0;
+}
+
+nav > ul > li {
+	border-radius: 4px;
+	display: inline-block;
+	padding: 8px 10px;
+	cursor: pointer;
+}
+nav.vertical > ul > li {
+	display: block;
+	clear: both;
+}
+
+nav > ul > li a {
+	text-decoration: none;
+}
+
+nav > ul > li a:hover {
+	text-decoration: underline;
+}

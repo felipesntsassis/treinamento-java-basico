@@ -7,22 +7,26 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	<meta charset="UTF-8">
-	<title>E-Commerce: Cadastro de Clientes</title>
+		<meta charset="UTF-8">
+		<title>E-Commerce: Cadastro de Clientes</title>
+		<link href="/ecommerce-web/assets/css/ecommerce.css" rel="stylesheet">
 	</head>
 	<body>
 		<h3>Cadastro de Clientes</h3>
-		<p>
-			<a href="editar-scriptlet.jsp">Novo Cliente</a>
-		</p>
-		<table border="1" width="750">
+		<nav>
+			<ul>
+				<li><a href="editar-scriptlet.jsp">Novo Cliente</a></li>
+				<li><a href="/ecommerce-web/">Voltar para Home</a></li>
+			</ul>
+		</nav>
+		<table border="1">
 			<thead>
 				<tr>
-					<th width="200">Nome</th>
-					<th width="200">E-mail</th>
+					<th>Nome</th>
+					<th>E-mail</th>
 					<th>Endereço</th>
-					<th width="100">Data de Nascimento</th>
-					<th width="80">Opções</th>
+					<th>Data de Nascimento</th>
+					<th>Opções</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -33,15 +37,15 @@
 					for (Cliente cliente : clientes) {
 				%>
 					<tr>
-						<td width="200"><%=cliente.getNome() %></td>
-						<td width="200"><%=cliente.getEmail() %></td>
+						<td><%=cliente.getNome() %></td>
+						<td><%=cliente.getEmail() %></td>
 						<td><%=cliente.getEndereco() %></td>
-						<td width="100">
+						<td>
 							<%=DateUtil.parseToString(cliente.getDataNascimento(), "dd/MM/YYYY") %>
 						</td>
-						<td width="80">
+						<td>
 							<button type="button" 
-								onclick="irPara('/ecommerce-web/cliente/editar-scriptlet.jsp?id=<%=cliente.getId()%>')">
+								onclick="irPara('/ecommerce-web/admin/cliente/editar-scriptlet.jsp?id=<%=cliente.getId()%>')">
 								Editar
 							</button>
 							<br>
@@ -60,7 +64,7 @@
 	<script>
 		const confirmaExclusao = (id) => {
 			if (confirm('Deseja excluir este cliente?')) {
-				irPara('/ecommerce-web/cliente?id=' + id);
+				irPara('/ecommerce-web/admin/cliente?id=' + id);
 			}
 		};
 	</script>
