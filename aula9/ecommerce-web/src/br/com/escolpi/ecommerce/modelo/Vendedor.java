@@ -5,6 +5,12 @@ public class Vendedor extends Pessoa {
 	private String departamento;
 	private Double percentualComissao;
 
+	public Vendedor() {}
+
+	public Vendedor(Long id) {
+		this.setId(id);
+	}
+
 	public String getDepartamento() {
 		return departamento;
 	}

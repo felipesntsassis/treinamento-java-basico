@@ -13,7 +13,6 @@ public class ProdutoDao extends GenericDao<Produto> {
 	private CategoriaDao categoriaDao;
 
 	public ProdutoDao() {
-		super();
 		categoriaDao = new CategoriaDao();
 	}
 
@@ -22,7 +21,7 @@ public class ProdutoDao extends GenericDao<Produto> {
 		String sql = "INSERT INTO produtos (categoria_id, descricao, quantidade, preco) "
 				+ "VALUES (?, ?, ?, ?)";
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
+			PreparedStatement stmt = openConnection().prepareStatement(sql);
 			stmt.setLong(1, produto.getCategoria().getId());
 			stmt.setString(2, produto.getDescricao());
 			stmt.setInt(3, produto.getQuantidade());
@@ -32,6 +31,8 @@ public class ProdutoDao extends GenericDao<Produto> {
 			stmt.close();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			closeConnection();
 		}
 	}
 
@@ -40,7 +41,7 @@ public class ProdutoDao extends GenericDao<Produto> {
 		String sql = "UPDATE produtos SET categoria_id = ?, descricao = ?, quantidade = ?, preco =  ? "
 				+ "WHERE id = ?";
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
+			PreparedStatement stmt = openConnection().prepareStatement(sql);
 			stmt.setLong(1, entidade.getCategoria().getId());
 			stmt.setString(2, entidade.getDescricao());
 			stmt.setInt(3, entidade.getQuantidade());
@@ -51,6 +52,8 @@ public class ProdutoDao extends GenericDao<Produto> {
 			stmt.close();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			closeConnection();
 		}
 	}
 
@@ -59,7 +62,7 @@ public class ProdutoDao extends GenericDao<Produto> {
 		List<Produto> produtos = new ArrayList<>();
 
 		try {
-			PreparedStatement stmt = connection.prepareStatement("SELECT * FROM produtos ORDER BY id");
+			PreparedStatement stmt = openConnection().prepareStatement("SELECT * FROM produtos ORDER BY id");
 			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
@@ -69,6 +72,8 @@ public class ProdutoDao extends GenericDao<Produto> {
 			stmt.close();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			closeConnection();
 		}
 
 		return produtos;
@@ -76,33 +81,38 @@ public class ProdutoDao extends GenericDao<Produto> {
 
 	@Override
 	public Produto obter(Long id) {
+		Produto produto = new Produto();
 		try {
-			PreparedStatement stmt = connection.prepareStatement("SELECT * FROM produtos WHERE id = ?");
+			PreparedStatement stmt = openConnection().prepareStatement("SELECT * FROM produtos WHERE id = ?");
 			stmt.setLong(1, id);
 			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				return popularEntidade(rs);
+				produto = popularEntidade(rs);
 			}
 
 			stmt.close();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			closeConnection();
 		}
 
-		return null;
+		return produto;
 	}
 
 	@Override
 	public void remover(Long id) {
 		try {
-			PreparedStatement stmt = connection.prepareStatement("DELETE FROM produtos WHERE id = ?");
+			PreparedStatement stmt = openConnection().prepareStatement("DELETE FROM produtos WHERE id = ?");
 			stmt.setLong(1, id);
 
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			closeConnection();
 		}
 	}
 

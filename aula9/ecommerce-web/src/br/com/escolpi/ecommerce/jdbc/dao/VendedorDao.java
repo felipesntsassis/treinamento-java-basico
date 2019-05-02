@@ -15,7 +15,7 @@ public class VendedorDao extends GenericDao<Vendedor> {
 		String sql = "INSERT INTO vendedores (nome, email, departamento, perc_comissao) "
 				+ "VALUES (?, ?, ?, ?)";
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
+			PreparedStatement stmt = openConnection().prepareStatement(sql);
 			stmt.setString(1, entidade.getNome());
 			stmt.setString(2, entidade.getEmail());
 			stmt.setString(3, entidade.getDepartamento());
@@ -33,7 +33,7 @@ public class VendedorDao extends GenericDao<Vendedor> {
 		String sql = "UPDATE vendedores SET nome = ?, email = ?, departamento = ?, perc_comissao = ? "
 				+ "WHERE id = ?";
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
+			PreparedStatement stmt = openConnection().prepareStatement(sql);
 			stmt.setString(1, entidade.getNome());
 			stmt.setString(2, entidade.getEmail());
 			stmt.setString(3, entidade.getDepartamento());
@@ -44,6 +44,8 @@ public class VendedorDao extends GenericDao<Vendedor> {
 			stmt.close();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			closeConnection();
 		}
 	}
 
@@ -52,7 +54,7 @@ public class VendedorDao extends GenericDao<Vendedor> {
 		List<Vendedor> vendedores = new ArrayList<>();
 
 		try {
-			PreparedStatement stmt = connection.prepareStatement("SELECT * FROM vendedores ORDER BY id");
+			PreparedStatement stmt = openConnection().prepareStatement("SELECT * FROM vendedores ORDER BY id");
 			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
@@ -62,6 +64,8 @@ public class VendedorDao extends GenericDao<Vendedor> {
 			stmt.close();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			closeConnection();
 		}
 
 		return vendedores;
@@ -69,35 +73,39 @@ public class VendedorDao extends GenericDao<Vendedor> {
 
 	@Override
 	public Vendedor obter(Long id) {
-		String sql = "SELECT * FROM vendedores WHERE id = ?";
+		Vendedor vendedor = new Vendedor();
 
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
+			PreparedStatement stmt = openConnection().prepareStatement("SELECT * FROM vendedores WHERE id = ?");
 			stmt.setLong(1, id);
 			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				return popularEntidade(rs);
+				vendedor = popularEntidade(rs);
 			}
 
 			stmt.close();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			closeConnection();
 		}
 
-		return null;
+		return vendedor;
 	}
 
 	@Override
 	public void remover(Long id) {
 		try {
-			PreparedStatement stmt = connection.prepareStatement("DELETE FROM vendedores WHERE id = ?");
+			PreparedStatement stmt = openConnection().prepareStatement("DELETE FROM vendedores WHERE id = ?");
 			stmt.setLong(1, id);
 			stmt.execute();
 			stmt.close();
 			System.out.println("Excluído!");
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			closeConnection();
 		}
 	}
 

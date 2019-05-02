@@ -1,3 +1,4 @@
+
 package br.com.escolpi.ecommerce.jdbc.dao;
 
 import java.sql.Date;
@@ -12,16 +13,12 @@ import br.com.escolpi.ecommerce.modelo.Cliente;
 
 public class ClienteDao extends GenericDao<Cliente> {
 
-	public ClienteDao() {
-		super();
-	}
-
 	@Override
 	public void adicionar(Cliente cliente) {
 		String sql = "INSERT INTO clientes (nome, email, endereco, data_nascimento) "
 				+ "VALUES (?, ?, ?, ?)";
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
+			PreparedStatement stmt = openConnection().prepareStatement(sql);
 			stmt.setString(1, cliente.getNome());
 			stmt.setString(2, cliente.getEmail());
 			stmt.setString(3, cliente.getEndereco());
@@ -31,6 +28,8 @@ public class ClienteDao extends GenericDao<Cliente> {
 			stmt.close();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			closeConnection();
 		}
 	}
 
@@ -39,7 +38,7 @@ public class ClienteDao extends GenericDao<Cliente> {
 		String sql = "UPDATE clientes SET nome = ?, email = ?, endereco = ?, data_nascimento = ? "
 				+ "WHERE id = ?";
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
+			PreparedStatement stmt = openConnection().prepareStatement(sql);
 			stmt.setString(1, entidade.getNome());
 			stmt.setString(2, entidade.getEmail());
 			stmt.setString(3, entidade.getEndereco());
@@ -51,6 +50,8 @@ public class ClienteDao extends GenericDao<Cliente> {
 			System.out.println("Alterado!");
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			closeConnection();
 		}
 	}
 
@@ -59,7 +60,7 @@ public class ClienteDao extends GenericDao<Cliente> {
 		List<Cliente> clientes = new ArrayList<>();
 
 		try {
-			PreparedStatement stmt = connection.prepareStatement("SELECT * FROM clientes ORDER BY id");
+			PreparedStatement stmt = openConnection().prepareStatement("SELECT * FROM clientes ORDER BY id");
 			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
@@ -69,6 +70,8 @@ public class ClienteDao extends GenericDao<Cliente> {
 			stmt.close();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			closeConnection();
 		}
 
 		return clientes;
@@ -76,35 +79,39 @@ public class ClienteDao extends GenericDao<Cliente> {
 
 	@Override
 	public Cliente obter(Long id) {
-		String sql = "SELECT * FROM clientes WHERE id = ?";
+		Cliente cliente = new Cliente();
 
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
+			PreparedStatement stmt = openConnection().prepareStatement("SELECT * FROM clientes WHERE id = ?");
 			stmt.setLong(1, id);
 			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				return popularEntidade(rs);
+				cliente = popularEntidade(rs);
 			}
 
 			stmt.close();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			closeConnection();
 		}
 
-		return null;
+		return cliente;
 	}
 
 	@Override
 	public void remover(Long id) {
 		try {
-			PreparedStatement stmt = connection.prepareStatement("DELETE FROM clientes WHERE id = ?");
+			PreparedStatement stmt = openConnection().prepareStatement("DELETE FROM clientes WHERE id = ?");
 			stmt.setLong(1, id);
 			stmt.execute();
 			stmt.close();
 			System.out.println("Excluído!");
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			closeConnection();
 		}
 	}
 

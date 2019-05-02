@@ -8,6 +8,12 @@ public class Produto {
 	private Integer quantidade;
 	private Double preco;
 
+	public Produto() {}
+
+	public Produto(Long id) {
+		this.id = id;
+	}
+
 	public Long getId() {
 		return id;
 	}

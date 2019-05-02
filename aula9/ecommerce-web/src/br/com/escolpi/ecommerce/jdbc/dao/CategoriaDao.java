@@ -10,14 +10,10 @@ import br.com.escolpi.ecommerce.modelo.Categoria;
 
 public class CategoriaDao extends GenericDao<Categoria> {
 
-	public CategoriaDao() {
-		super();
-	}
-
 	@Override
 	public void adicionar(Categoria categoria) {
 		try {
-			PreparedStatement stmt = connection.prepareStatement("INSERT INTO categorias (descricao) VALUES (?)");
+			PreparedStatement stmt = openConnection().prepareStatement("INSERT INTO categorias (descricao) VALUES (?)");
 			stmt.setString(1, categoria.getDescricao());
 
 			stmt.execute();
@@ -25,13 +21,15 @@ public class CategoriaDao extends GenericDao<Categoria> {
 			System.out.println("Gravado!");
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			closeConnection();
 		}
 	}
 
 	@Override
 	public void alterar(Categoria entidade) {
 		try {
-			PreparedStatement stmt = connection.prepareStatement("UPDATE categorias SET descricao = ? WHERE id = ?");
+			PreparedStatement stmt = openConnection().prepareStatement("UPDATE categorias SET descricao = ? WHERE id = ?");
 			stmt.setString(1, entidade.getDescricao());
 			stmt.setLong(2, entidade.getId());
 
@@ -40,6 +38,8 @@ public class CategoriaDao extends GenericDao<Categoria> {
 			System.out.println("Altearado!");
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			closeConnection();
 		}
 	}
 
@@ -48,7 +48,7 @@ public class CategoriaDao extends GenericDao<Categoria> {
 		List<Categoria> categorias = new ArrayList<>();
 
 		try {
-			PreparedStatement stmt = connection.prepareStatement("SELECT * FROM categorias ORDER BY id");
+			PreparedStatement stmt = openConnection().prepareStatement("SELECT * FROM categorias ORDER BY id");
 			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
@@ -59,6 +59,8 @@ public class CategoriaDao extends GenericDao<Categoria> {
 			System.out.println("Listado!");
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			closeConnection();
 		}
 
 		return categorias;
@@ -66,28 +68,31 @@ public class CategoriaDao extends GenericDao<Categoria> {
 
 	@Override
 	public Categoria obter(Long id) {
+		Categoria categoria = new Categoria();
+		
 		try {
-			PreparedStatement stmt = connection.prepareStatement("SELECT * FROM categorias WHERE id = ?");
+			PreparedStatement stmt = openConnection().prepareStatement("SELECT * FROM categorias WHERE id = ?");
 			stmt.setLong(1, id);
 			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				return popularEntidade(rs);
+				categoria = popularEntidade(rs);
 			}
 
 			stmt.close();
-			System.out.println("Obtido!");
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			closeConnection();
 		}
 
-		return null;
+		return categoria;
 	}
 
 	@Override
 	public void remover(Long id) {
 		try {
-			PreparedStatement stmt = connection.prepareStatement("DELETE FROM categorias WHERE id = ?");
+			PreparedStatement stmt = openConnection().prepareStatement("DELETE FROM categorias WHERE id = ?");
 			stmt.setLong(1, id);
 
 			stmt.execute();
@@ -95,6 +100,8 @@ public class CategoriaDao extends GenericDao<Categoria> {
 			System.out.println("Excluído!");
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
+		} finally {
+			closeConnection();
 		}
 	}
 

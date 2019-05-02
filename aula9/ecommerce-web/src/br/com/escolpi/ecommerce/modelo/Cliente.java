@@ -7,6 +7,12 @@ public class Cliente extends Pessoa {
 	private String endereco;
 	private Calendar dataNascimento;
 
+	public Cliente() { }
+
+	public Cliente(Long id) {
+		this.setId(id);
+	}
+
 	public String getEndereco() {
 		return endereco;
 	}

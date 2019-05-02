@@ -10,7 +10,7 @@
 <body>
 	<%-- comentário JSP aqui: nossa primeira página JSP --%>
 	<h1>Bem vindo ao E-Commerce Escolpi!</h1>
-	<div>
+	<div class="coluna-menu">
 		<h3>Cadastros</h3>
 		<nav class="vertical">
 			<ul>
@@ -18,6 +18,14 @@
 				<li><a href="/ecommerce-web/admin/cliente/lista-scriptlet.jsp">Clientes</a></li>
 				<li><a href="/ecommerce-web/admin/produto/lista-scriptlet.jsp">Produtos</a></li>
 				<li><a href="/ecommerce-web/admin/vendedor/lista-scriptlet.jsp">Vendedores</a></li>
+			</ul>
+		</nav>
+	</div>
+	<div class="coluna-menu">
+		<h3>Vendas</h3>
+		<nav class="vertical">
+			<ul>
+				<li><a href="/ecommerce-web/admin/pedido/lista-scriptlet.jsp">Pedidos</a></li>
 			</ul>
 		</nav>
 	</div>
