@@ -21,7 +21,6 @@ import br.com.escolpi.ecommerce.jdbc.dao.VendedorDao;
 import br.com.escolpi.ecommerce.modelo.ItemPedido;
 import br.com.escolpi.ecommerce.modelo.Pedido;
 import br.com.escolpi.ecommerce.modelo.Produto;
-import br.com.escolpi.ecommerce.util.DateUtil;
 
 /**
  * Servlet implementation class LancarVenda
@@ -40,6 +39,7 @@ public class AdicionaPedidoServlet extends HttpServlet {
 	public void init() throws ServletException {
 		super.init();
 		clienteDao = new ClienteDao();
+		itemPedidoDao = new ItemPedidoDao();
 		pedidoDao = new PedidoDao();
 		vendedorDao = new VendedorDao();
 	}
@@ -65,18 +65,15 @@ public class AdicionaPedidoServlet extends HttpServlet {
 		pedido.setSituacao(SituacaoPedido.NOVO);
 		pedido.setVendedor(vendedorDao.obter(Long.valueOf(req.getParameter("vendedorId"))));
 
-		if (req.getParameter("id") != null) {
-			pedido.setId(Long.valueOf(req.getParameter("id")));
-			pedido.setDataPedido(DateUtil.parseToCalendar(req.getParameter("dataDoPedido"), "dd/MM/yyyy"));
+		if (req.getParameter("id") != null && req.getParameter("id") != "") {
+			pedido = pedidoDao.obter(Long.valueOf(req.getParameter("id")));
 		}
 
 		pedido.setItensPedido(new ArrayList<>());
-		
-
 		String acao = "incluído";
 
 		if (pedido.getId() != null && pedido.getId() > 0) {
-			pedido.setSituacao(SituacaoPedido.obter(new Integer(req.getParameter("situacao"))));
+			//pedido.setSituacao(SituacaoPedido.obter(new Integer(req.getParameter("situacao"))));
 			pedidoDao.alterar(pedido);
 			acao = "alterado";
 		} else {
@@ -84,25 +81,40 @@ public class AdicionaPedidoServlet extends HttpServlet {
 			pedidoDao.adicionar(pedido);
 		}
 
-		adicionarItensDoPedido(req, pedido);
+		manterItensDoPedido(req, pedido);
 		feedback(acao, resp);
 	}
 
-	private void adicionarItensDoPedido(HttpServletRequest req, Pedido pedido) {
-		List<String> itens = Arrays.asList(req.getParameterValues("itemPedido.item"));
+	private void manterItensDoPedido(HttpServletRequest req, Pedido pedido) {
+		List<String> ids = Arrays.asList(req.getParameterValues("itemPedido.id"));
+		List<String> produtoIds = Arrays.asList(req.getParameterValues("itemPedido.produtoId"));
 		List<String> quantidades = Arrays.asList(req.getParameterValues("itemPedido.quantidade"));
 		List<String> valores = Arrays.asList(req.getParameterValues("itemPedido.valor"));
 
-		for (int i = 0; i < itens.size(); i++) {
+		for (int i = 0; i < produtoIds.size(); i++) {
 			ItemPedido itemPedido = new ItemPedido();
+
+			if (ids.get(i) != "")
+				itemPedido.setId(Long.valueOf(ids.get(i)));
+
 			itemPedido.setPedido(pedido);
-			itemPedido.setProduto(new Produto(Long.valueOf(itens.get(i))));
+			itemPedido.setProduto(new Produto(Long.valueOf(produtoIds.get(i))));
 			itemPedido.setQuantidade(Integer.valueOf(quantidades.get(i)));
 			itemPedido.setValor(Double.valueOf(valores.get(i)));
 			pedido.getItensPedido().add(itemPedido);
 		}
 
-		pedido.getItensPedido().forEach(item -> itemPedidoDao.adicionar(item));
+		pedido.getItensPedido().stream()
+			.filter(item -> item.getId() == null)
+			.forEach(item -> itemPedidoDao.adicionar(item));
+		pedido.getItensPedido().stream()
+			.filter(item -> item.getId() != null)
+			.forEach(item -> itemPedidoDao.alterar(item));
+
+		if (req.getParameterValues("itensExclusao") != null) {
+			List<String> itensExclusao = Arrays.asList(req.getParameterValues("itensExclusao"));
+			itensExclusao.forEach(item -> itemPedidoDao.remover(Long.valueOf(item)));
+		}
 	}
 
 	private void feedback(String acao, HttpServletResponse resp) throws IOException {

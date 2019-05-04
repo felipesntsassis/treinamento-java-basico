@@ -45,7 +45,6 @@ public class PedidoDao extends GenericDao<Pedido> {
 			stmt.setDate(3, new Date(entidade.getDataPedido().getTimeInMillis()));
 			stmt.setInt(4, entidade.getSituacao().ordinal());
 			stmt.setLong(5, entidade.getId());
-			entidade.setId(obterId(stmt));
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {

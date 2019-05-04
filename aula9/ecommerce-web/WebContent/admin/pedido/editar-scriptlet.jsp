@@ -1,3 +1,6 @@
+<%@page import="java.util.Optional"%>
+<%@page import="java.util.stream.Collectors"%>
+<%@page import="java.util.stream.Collector"%>
 <%@page import="br.com.escolpi.ecommerce.jdbc.dao.ItemPedidoDao"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="br.com.escolpi.ecommerce.modelo.ItemPedido"%>
@@ -34,9 +37,7 @@
 		%>
 		<h3><%=edicao ? "Editar" : "Cadastrar" %> Pedido</h3>
 		<form id="form-pedido" action="/ecommerce-web/admin/pedido" method="POST">
-			<% if (edicao) { %>
-				<input type="hidden" name="id" value="<%=pedido.getId() %>">
-			<% } %>
+			<input type="hidden" name="id" value="<%=pedido.getId() != null && pedido.getId() > 0 ? pedido.getId() : "" %>">
 			<small>* Campos obrigatórios</small>
 			<p>
 				<label for="combo-vendedor">* Vendedor:</label><br>
@@ -89,8 +90,9 @@
 				<legend>Itens do Pedido</legend>
 				<table class="table-form">
 					<tbody>
-						<tr>	
+						<tr id="subform-item-pedido" >
 							<td>
+								<input type="hidden" id="hd-item-pedido-id" name="itemPedidoId" value="">
 								<label for="combo-produto">Produto:</label><br>
 								<%
 									ProdutoDao produtoDao = new ProdutoDao();
@@ -129,7 +131,7 @@
 								<label for="txt-valor">Valor (R$):</label><br>
 								<input type="text" id="txt-valor" name="valor" readonly>
 							</td>
-							<td class="text-right">
+							<td id="acoes-item-pedido" class="text-right">
 								<br>
 								<button type="button" onclick="incluirItem()">Incluir Item</button>
 							</td>
@@ -150,34 +152,38 @@
 										<%
 											List<ItemPedido> itensPedido = new ArrayList<>();
 											ItemPedidoDao itemPedidoDao = new ItemPedidoDao();
+											Double totalPedido = 0.0d;
 
 											if (edicao) {
 												itensPedido = itemPedidoDao.listarPorPedido(pedido.getId());
 												for (ItemPedido item: itensPedido) {
 										%>
-											<tr>
-												<td>
-													<input type="hidden" name="itemPedido.item" value="<%=item.getProduto().getId()%>">
-													<%=item.getProduto().getDescricao()%>
-												</td>
-												<td>
-													<input type="hidden" name="itemPedido.item" value="<%=item.getProduto().getPreco()%>">
-													<%=NumberUtil.formatarMoeda(item.getProduto().getPreco(), true)%>
-												</td>
-												<td>
-													<input type="hidden" name="itemPedido.item" value="<%=item.getQuantidade()%>">
-													<%=item.getQuantidade()%>
-												</td>
-												<td>
-													<input type="hidden" name="itemPedido.item" value="<%=item.getValor()%>">
-													<%=item.getValor()%>
-												</td>
-												<td>
-													<button type="button" onclick="editarItem();">&edit; Editar</button><br>
-													<button type="button" onclick="removerItem();">&times; Remover</button>
-												</td>
-											</tr>
+													<tr>
+														<td>
+															<input type="hidden" name="itemPedido.id" value="<%=item.getId()%>">
+															<input type="hidden" name="itemPedido.idPedido" value="<%=item.getPedido().getId()%>">
+															<input type="hidden" name="itemPedido.produtoId" value="<%=item.getProduto().getId()%>">
+															<input type="hidden" name="itemPedido.preco" value="<%=item.getProduto().getPreco()%>">
+															<input type="hidden" name="itemPedido.quantidade" value="<%=item.getQuantidade()%>">
+															<input type="hidden" name="itemPedido.valor" value="<%=item.getValor()%>">
+															<%=item.getProduto().getDescricao()%>
+														</td>
+														<td>
+															<%=NumberUtil.formatarMoeda(item.getProduto().getPreco(), true)%>
+														</td>
+														<td>
+															<%=item.getQuantidade()%>
+														</td>
+														<td>
+															<%=NumberUtil.formatarMoeda(item.getValor(), true)%>
+														</td>
+														<td class="text-center">
+															<button type="button" onclick="editarItem(event);">Editar</button><br>
+															<button type="button" onclick="removerItem(event);">Remover</button>
+														</td>
+													</tr>
 										<%
+													totalPedido += item.getValor();
 												}
 											} else {
 										%>
@@ -194,7 +200,11 @@
 										<tr>
 											<td colspan="5" class="text-right">
 												<strong>Subtotal:</strong>
-												<em>R$ <span  id="total-item-pedido">0,00</span></em>
+												<em>
+													<span id="total-item-pedido">
+														<%=NumberUtil.formatarMoeda(totalPedido, true) %>
+													</span>
+												</em>
 											</td>
 										</tr>
 									</tfoot>

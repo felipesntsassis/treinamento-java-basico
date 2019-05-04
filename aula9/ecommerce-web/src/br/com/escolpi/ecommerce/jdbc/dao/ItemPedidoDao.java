@@ -33,7 +33,7 @@ public class ItemPedidoDao extends GenericDao<ItemPedido> {
 	@Override
 	public void alterar(ItemPedido entidade) {
 		String sql = "UPDATE itens_pedidos SET pedido_id = ?, produto_id = ?, quantidade = ?, "
-				+ "valor+item = ? WHERE id = ?";
+				+ "valor_item = ? WHERE id = ?";
 		try {
 			PreparedStatement stmt = openConnection().prepareStatement(sql);
 			stmt.setLong(1, entidade.getPedido().getId());
