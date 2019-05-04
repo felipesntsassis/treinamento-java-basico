@@ -6,15 +6,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.escolpi.ecommerce.modelo.Categoria;
 import br.com.escolpi.ecommerce.modelo.Produto;
 
 public class ProdutoDao extends GenericDao<Produto> {
-
-	private CategoriaDao categoriaDao;
-
-	public ProdutoDao() {
-		categoriaDao = new CategoriaDao();
-	}
 
 	@Override
 	public void adicionar(Produto produto) {
@@ -62,7 +57,10 @@ public class ProdutoDao extends GenericDao<Produto> {
 		List<Produto> produtos = new ArrayList<>();
 
 		try {
-			PreparedStatement stmt = openConnection().prepareStatement("SELECT * FROM produtos ORDER BY id");
+			StringBuilder sql = new StringBuilder("SELECT p.*, c.* FROM produtos p ")
+				.append("INNER JOIN categorias c ON c.id = p.categoria_id ")
+				.append("ORDER BY p.id");
+			PreparedStatement stmt = openConnection().prepareStatement(sql.toString());
 			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
@@ -83,7 +81,10 @@ public class ProdutoDao extends GenericDao<Produto> {
 	public Produto obter(Long id) {
 		Produto produto = new Produto();
 		try {
-			PreparedStatement stmt = openConnection().prepareStatement("SELECT * FROM produtos WHERE id = ?");
+			StringBuilder sql = new StringBuilder("SELECT p.*, c.* FROM produtos p ")
+					.append("INNER JOIN categorias c ON c.id = p.categoria_id ")
+					.append("WHERE id = ?");
+			PreparedStatement stmt = openConnection().prepareStatement(sql.toString());
 			stmt.setLong(1, id);
 			ResultSet rs = stmt.executeQuery();
 
@@ -119,14 +120,15 @@ public class ProdutoDao extends GenericDao<Produto> {
 	@Override
 	public Produto popularEntidade(ResultSet rs) throws SQLException {
 		Produto produto = new Produto();
-		produto.setId(rs.getLong("id"));
+		produto.setId(rs.getLong("p.id"));
 //		Quando tinhamos apenas o ID, populamos desta forma:
 //		produto.setCategoriaId(rs.getLong("categoria_id"));
 //		Porém, trabalhamos com objetos, a prática correta é esta:
-		produto.setCategoria(categoriaDao.obter(rs.getLong("categoria_id")));
-		produto.setDescricao(rs.getString("descricao"));
-		produto.setQuantidade(rs.getInt("quantidade"));
-		produto.setPreco(rs.getDouble("preco"));
+		produto.setDescricao(rs.getString("p.descricao"));
+		produto.setQuantidade(rs.getInt("p.quantidade"));
+		produto.setPreco(rs.getDouble("p.preco"));
+		produto.setCategoria(new Categoria(rs.getLong("p.categoria_id")));
+		produto.getCategoria().setDescricao(rs.getString("c.descricao"));
 
 		return produto;
 	}

@@ -1,21 +1,18 @@
-<%@page import="java.util.Optional"%>
-<%@page import="java.util.stream.Collectors"%>
-<%@page import="java.util.stream.Collector"%>
-<%@page import="br.com.escolpi.ecommerce.jdbc.dao.ItemPedidoDao"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="br.com.escolpi.ecommerce.modelo.ItemPedido"%>
-<%@page import="br.com.escolpi.ecommerce.util.NumberUtil"%>
-<%@page import="javax.print.attribute.standard.NumberUp"%>
-<%@page import="br.com.escolpi.ecommerce.modelo.Produto"%>
-<%@page import="br.com.escolpi.ecommerce.jdbc.dao.ProdutoDao"%>
-<%@page import="br.com.escolpi.ecommerce.enumerador.SituacaoPedido"%>
-<%@page import="br.com.escolpi.ecommerce.modelo.Cliente"%>
-<%@page import="br.com.escolpi.ecommerce.jdbc.dao.ClienteDao"%>
-<%@page import="br.com.escolpi.ecommerce.jdbc.dao.VendedorDao"%>
 <%@page import="java.util.List"%>
-<%@page import="br.com.escolpi.ecommerce.modelo.Vendedor"%>
-<%@page import="br.com.escolpi.ecommerce.jdbc.dao.PedidoDao"%>
+<%@page import="br.com.escolpi.ecommerce.modelo.Cliente"%>
+<%@page import="br.com.escolpi.ecommerce.modelo.ItemPedido"%>
 <%@page import="br.com.escolpi.ecommerce.modelo.Pedido"%>
+<%@page import="br.com.escolpi.ecommerce.modelo.Produto"%>
+<%@page import="br.com.escolpi.ecommerce.enumerador.SituacaoPedido"%>
+<%@page import="br.com.escolpi.ecommerce.modelo.Vendedor"%>
+<%@page import="br.com.escolpi.ecommerce.jdbc.dao.ClienteDao"%>
+<%@page import="br.com.escolpi.ecommerce.jdbc.dao.ItemPedidoDao"%>
+<%@page import="br.com.escolpi.ecommerce.jdbc.dao.ProdutoDao"%>
+<%@page import="br.com.escolpi.ecommerce.jdbc.dao.VendedorDao"%>
+<%@page import="br.com.escolpi.ecommerce.jdbc.dao.PedidoDao"%>
+<%@page import="br.com.escolpi.ecommerce.util.NumberUtil"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 	<html>

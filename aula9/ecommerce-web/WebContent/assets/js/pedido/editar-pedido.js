@@ -15,7 +15,6 @@ let produtoSelecionado = '';
 let indexLinhaSelecionada = null;
 
 comboProduto.addEventListener('change', (event) => {
-	console.log('change');
 	produtoSelecionado = comboProduto.options[comboProduto.selectedIndex].dataset.descricao;
 	txtValor.value = comboProduto.options[comboProduto.selectedIndex].dataset.preco;
 	precoProdutoSelecionado = (txtValor.value) ? parseFloat(txtValor.value.replace(',', '.')) : 0;

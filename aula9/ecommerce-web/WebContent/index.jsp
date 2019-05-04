@@ -14,10 +14,10 @@
 		<h3>Cadastros</h3>
 		<nav class="vertical">
 			<ul>
-				<li><a href="/ecommerce-web/admin/categoria/lista-scriptlet.jsp">Categorias</a></li>
-				<li><a href="/ecommerce-web/admin/cliente/lista-scriptlet.jsp">Clientes</a></li>
-				<li><a href="/ecommerce-web/admin/produto/lista-scriptlet.jsp">Produtos</a></li>
-				<li><a href="/ecommerce-web/admin/vendedor/lista-scriptlet.jsp">Vendedores</a></li>
+				<li><a href="/ecommerce-web/admin/categoria/lista-taglib.jsp">Categorias</a></li>
+				<li><a href="/ecommerce-web/admin/cliente/lista-taglib.jsp">Clientes</a></li>
+				<li><a href="/ecommerce-web/admin/produto/lista-taglib.jsp">Produtos</a></li>
+				<li><a href="/ecommerce-web/admin/vendedor/lista-taglib.jsp">Vendedores</a></li>
 			</ul>
 		</nav>
 	</div>
