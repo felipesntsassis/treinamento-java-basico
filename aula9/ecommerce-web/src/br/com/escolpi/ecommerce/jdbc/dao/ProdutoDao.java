@@ -83,7 +83,7 @@ public class ProdutoDao extends GenericDao<Produto> {
 		try {
 			StringBuilder sql = new StringBuilder("SELECT p.*, c.* FROM produtos p ")
 					.append("INNER JOIN categorias c ON c.id = p.categoria_id ")
-					.append("WHERE id = ?");
+					.append("WHERE p.id = ?");
 			PreparedStatement stmt = openConnection().prepareStatement(sql.toString());
 			stmt.setLong(1, id);
 			ResultSet rs = stmt.executeQuery();

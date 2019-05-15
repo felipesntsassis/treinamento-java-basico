@@ -69,9 +69,9 @@ public class AdicionaCategoriaServlet extends HttpServlet {
 			.append("<html>")
 			.append("	<body>")
 			.append("		<h3>Categoria %s com sucesso!</h3>")
-			.append("		<a href=\"/ecommerce-web/admin/categoria/editar-scriptlet.jsp\">Nova Categoria</a>")
+			.append("		<a href=\"/ecommerce-web/admin/categoria/editar-taglib.jsp\">Nova Categoria</a>")
 			.append("		&nbsp;")
-			.append("		<a href=\"/ecommerce-web/admin/categoria/lista-scriptlet.jsp\">Voltar</a>")
+			.append("		<a href=\"/ecommerce-web/admin/categoria/lista-taglib.jsp\">Voltar</a>")
 			.append("	</body>")
 			.append("</html>");
 		out.println(String.format(resposta.toString(), acao));

@@ -1,47 +1,58 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <jsp:useBean id="dao" class="br.com.escolpi.ecommerce.jdbc.dao.CategoriaDao"/>
 <c:set var="categorias" value="${dao.listar()}"/>
 
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title>E-Commerce: Cadastro de Categorias</title>
-		<link href="/ecommerce-web/assets/css/ecommerce.css" rel="stylesheet">
-	</head>
-	<body>
+<c:import url="/cabecalho.jsp"/>
+
+<div class="row">
+	<div class="col-12">
 		<h3>Cadastro de Categorias</h3>
 		<nav>
-			<ul>
-				<li><a href="editar-scriptlet.jsp">Nova Categoria</a></li>
-				<li><a href="/ecommerce-web/">Voltar para Home</a></li>
+			<ul class="nav justify-content-end">
+				<li class="nav-item">
+					<a class="btn btn-primary" href="editar-taglib.jsp">
+						<i class="fa fa-plus-square"></i> Nova Categoria
+					</a>
+				</li>
 			</ul>
 		</nav>
-		<table border="1">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-12">
+		<table class="table table-striped table-hover">
 			<thead>
-				<tr>
-					<th>Descrição</th>
-					<th>Opções</th>
+				<tr class="table-primary">
+					<th class="col-10">Descrição</th>
+					<th class="col-2 text-center">Opções</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:choose>
 					<c:when test="${!empty categorias}">
-						<c:forEach items="${categorias}" var="categoria">
+						<c:forEach items="${categorias}" var="categoria" varStatus="index">
 							<tr>
+<%-- 							<tr class="${ index.count % 2 == 0 ? 'linha-zebrada' : 'linha' }"> --%>
 								<td>${categoria.descricao}</td>
-								<td>
-									<button type="button" 
-										onclick="irPara('/ecommerce-web/admin/categoria/editar?id=${categoria.id}')">
-										Editar
-									</button>
-									<br>
-									<button type="button" onclick="confirmaExclusao(${categoria.id})">
-										Excluir
-									</button>
+								<td class="text-center">
+									<div class="dropdown">
+										<button type="button" class="btn btn-sm btn-outline-primary" data-toggle="dropdown" 
+											data-offset="-130,0" aria-haspopup="true" aria-expanded="false">
+											...
+										</button>
+										<div class="dropdown-menu">
+											<a class="dropdown-item text-primary" 
+												href="/ecommerce-web/admin/categoria/editar-taglib.jsp?id=${categoria.id}">
+												<i class="fa fa-edit"></i> Editar
+											</a>
+											<a class="dropdown-item text-danger" href="#" onclick="confirmaExclusao(${categoria.id})">
+												<i class="fa fa-trash"></i> Excluir
+											</a>
+										</div>
+									</div>
 								</td>
 							</tr>
 						</c:forEach>
@@ -56,13 +67,14 @@
 				</c:choose>
 			</tbody>
 		</table>
-	</body>
-	<script src="/ecommerce-web/assets/js/common.js"></script>
-	<script>
-		const confirmaExclusao = (id) => {
-			if (confirm('Deseja excluir esta Categoria?')) {
-				irPara('/ecommerce-web/admin/categoria?id=' + id);
-			}
-		};
-	</script>
-</html>
+	</div>
+</div>
+<script>
+	const confirmaExclusao = (id) => {
+		if (confirm('Deseja excluir esta Categoria?')) {
+			irPara('/ecommerce-web/admin/categoria?id=' + id);
+		}
+	};
+</script>
+
+<c:import url="/rodape.jsp"/>

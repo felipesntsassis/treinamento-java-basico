@@ -79,9 +79,9 @@ public class AdicionaClienteServlet extends HttpServlet {
 			.append("<html>")
 			.append("	<body>")
 			.append("		<h3>Cliente %s com sucesso!</h3>")
-			.append("		<a href=\"/ecommerce-web/admin/cliente/editar-scriptlet.jsp\">Novo Cliente</a>")
+			.append("		<a href=\"/ecommerce-web/admin/cliente/editar-taglib.jsp\">Novo Cliente</a>")
 			.append("		&nbsp;")
-			.append("		<a href=\"/ecommerce-web/admin/cliente/lista-scriptlet.jsp\">Voltar</a>")
+			.append("		<a href=\"/ecommerce-web/admin/cliente/lista-taglib.jsp\">Voltar</a>")
 			.append("	</body>")
 			.append("</html>");
 		out.println(String.format(resposta.toString(), acao));

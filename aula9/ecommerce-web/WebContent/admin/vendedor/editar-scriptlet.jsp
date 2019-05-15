@@ -1,5 +1,4 @@
 <%@page import="br.com.escolpi.ecommerce.util.NumberUtil"%>
-<%@page import="javafx.util.converter.PercentageStringConverter"%>
 <%@page import="br.com.escolpi.ecommerce.util.DateUtil"%>
 <%@page import="br.com.escolpi.ecommerce.jdbc.dao.VendedorDao"%>
 <%@page import="br.com.escolpi.ecommerce.modelo.Vendedor"%>

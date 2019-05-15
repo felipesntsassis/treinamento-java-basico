@@ -77,9 +77,9 @@ public class AdicionaProdutoServlet extends HttpServlet {
 			.append("<html>")
 			.append("	<body>")
 			.append("		<h3>Produto %s com sucesso!</h3>")
-			.append("		<a href=\"/ecommerce-web/admin/produto/editar-scriptlet.jsp\">Novo Produto</a>")
+			.append("		<a href=\"/ecommerce-web/admin/produto/editar-taglib.jsp\">Novo Produto</a>")
 			.append("		&nbsp;")
-			.append("		<a href=\"/ecommerce-web/admin/produto/lista-scriptlet.jsp\">Voltar</a>")
+			.append("		<a href=\"/ecommerce-web/admin/produto/lista-taglib.jsp\">Voltar</a>")
 			.append("	</body>")
 			.append("</html>");
 		out.println(String.format(resposta.toString(), acao));

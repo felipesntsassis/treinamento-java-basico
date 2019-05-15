@@ -124,9 +124,9 @@ public class AdicionaPedidoServlet extends HttpServlet {
 			.append("<html>")
 			.append("	<body>")
 			.append("		<h3>Pedido %s com sucesso!</h3>")
-			.append("		<a href=\"/ecommerce-web/admin/pedido/editar-scriptlet.jsp\">Novo Pedido</a>")
+			.append("		<a href=\"/ecommerce-web/admin/pedido/editar-taglib.jsp\">Novo Pedido</a>")
 			.append("		&nbsp;")
-			.append("		<a href=\"/ecommerce-web/admin/pedido/lista-scriptlet.jsp\">Voltar</a>")
+			.append("		<a href=\"/ecommerce-web/admin/pedido/lista-taglib.jsp\">Voltar</a>")
 			.append("	</body>")
 			.append("</html>");
 

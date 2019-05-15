@@ -16,15 +16,14 @@ input, select, button {
 	padding: 8px 6px;
 }
 
-/* Formulários */
-button {
-	min-width: 80px;
+/** Tabelas **/
+.linha {
+	background-color: #FFFFFF;
 }
 
-table tr td > button {
-	margin: 4px 0;
+.linha-zebrada {
+	background-color: #EBEBEB;
 }
-
 
 /* Navegação */
 nav > ul {
@@ -75,6 +74,12 @@ nav > ul > li a:hover {
 
 .text-center {
 	text-align: center;
+}
+
+.required:before {
+	content: '*';
+	color: #DC3545;
+	padding-right: 8px;
 }
 
 /** Dimensões **/
