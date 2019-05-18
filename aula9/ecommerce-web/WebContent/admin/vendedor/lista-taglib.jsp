@@ -8,58 +8,78 @@
 
 <c:import url="/cabecalho.jsp"/>
 
-<h3>Cadastro de Vendedores</h3>
-<nav>
-	<ul>
-		<li><a href="editar-taglib.jsp">Novo Vendedor</a></li>
-		<li><a href="/ecommerce-web/">Voltar para Home</a></li>
-	</ul>
-</nav>
-<table border="1">
-	<thead>
-		<tr>
-			<th>Nome</th>
-			<th>E-mail</th>
-			<th>Departamento</th>
-			<th>Perc. de Comissão</th>
-			<th>Opções</th>
-		</tr>
-	</thead>
-	<tbody>
-		<c:choose>
-			<c:when test="${!empty vendedores}">
-				<c:forEach items="${vendedores}" var="vendedor" varStatus="index">
-					<tr class="${ index.count % 2 == 0 ? 'linha-zebrada' : 'linha' }">
-						<td>${vendedor.nome}</td>
-						<td>${vendedor.email}</td>
-						<td>${vendedor.departamento}</td>
-						<td>
-							<fmt:formatNumber var="percentualComissao" value="${vendedor.percentualComissao}"
-								type="number" minFractionDigits="2" maxFractionDigits="2"/>
-							${percentualComissao} %
+<div class="row">
+	<div class="col-12">
+		<h3>Cadastro de Vendedores</h3>
+		<nav>
+			<ul class="nav justify-content-end">
+				<li class="nav-item">
+					<a class="btn btn-primary" href="editar-taglib.jsp">
+						<i class="fa fa-plus-square"></i> Novo Vendedor
+					</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col-12">
+		<table class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<th scope="col">Nome</th>
+				<th scope="col">E-mail</th>
+				<th scope="col">Departamento</th>
+				<th scope="col">Perc. de Comissão</th>
+				<th scope="col" class="text-center">Opções</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:choose>
+				<c:when test="${!empty vendedores}">
+					<c:forEach items="${vendedores}" var="vendedor" varStatus="index">
+						<tr>
+							<td>${vendedor.nome}</td>
+							<td>${vendedor.email}</td>
+							<td>${vendedor.departamento}</td>
+							<td>
+								<fmt:formatNumber var="percentualComissao" value="${vendedor.percentualComissao}"
+									type="number" minFractionDigits="2" maxFractionDigits="2"/>
+								${percentualComissao} %
+							</td>
+							<td class="text-center">
+								<div class="dropdown">
+										<button type="button" class="btn btn-sm btn-outline-primary" data-toggle="dropdown" 
+											data-offset="-130,0" aria-haspopup="true" aria-expanded="false">
+											<i class="fa fa-bars"></i>
+										</button>
+										<div class="dropdown-menu">
+											<a class="dropdown-item text-primary" 
+												href="/ecommerce-web/admin/vendedor/editar-taglib.jsp?id=${vendedor.id}">
+												<i class="fa fa-edit"></i> Editar
+											</a>
+											<a class="dropdown-item text-danger" href="#" onclick="confirmaExclusao(${vendedor.id})">
+												<i class="fa fa-trash"></i> Excluir
+											</a>
+										</div>
+									</div>
+							</td>
+						</tr>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td colspan="5">
+							<em>Nenhum Vendedor cadastrado.</em>
 						</td>
-						<td>
-							<button type="button" 
-								onclick="irPara('/ecommerce-web/admin/vendedor/editar-taglib.jsp?id=${vendedor.id}')">
-								Editar
-							</button>
-							<br>
-							<button type="button" onclick="confirmaExclusao(${vendedor.id})">
-								Excluir
-							</button>
-						</td>
-					</tr>
-				</c:forEach>
-			</c:when>
-			<c:otherwise>
-				<tr>
-					<td colspan="5">
-						<em>Nenhum Vendedor cadastrado.</em>
-					</td>
-			</c:otherwise>
-		</c:choose>
-	</tbody>
-</table>
+				</c:otherwise>
+			</c:choose>
+		</tbody>
+	</table>
+	</div>
+</div>
 <script>
 	const confirmaExclusao = (id) => {
 		if (confirm('Deseja excluir este vendedor?')) {

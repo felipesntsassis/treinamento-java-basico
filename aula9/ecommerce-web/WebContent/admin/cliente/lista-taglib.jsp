@@ -8,59 +8,77 @@
 
 <c:import url="/cabecalho.jsp"/>
 
-<h3>Cadastro de Clientes</h3>
-<nav>
-	<ul>
-		<li><a href="editar-taglib.jsp">Novo Cliente</a></li>
-		<li><a href="/ecommerce-web/">Voltar para Home</a></li>
-	</ul>
-</nav>
-<table border="1">
-	<thead>
-		<tr>
-			<th>Nome</th>
-			<th>E-mail</th>
-			<th>Endereço</th>
-			<th>Data de Nascimento</th>
-			<th>Opções</th>
-		</tr>
-	</thead>
-	<tbody>
-		<c:choose>
-			<c:when test="${!empty clientes}">
-				<c:forEach items="${clientes}" var="cliente" varStatus="index">
-					<tr class="${ index.count % 2 == 0 ? 'linha-zebrada' : 'linha' }">
-						<td>${cliente.nome}</td>
-						<td>${cliente.email}</td>
-						<td>${cliente.endereco}</td>
-						<td>
-							<fmt:formatDate var="dataNascimento" value="${ cliente.dataNascimento.time }" 
-								pattern="dd/MM/yyyy"/>
-							${dataNascimento}
-						</td>
-						<td>
-							<button type="button" 
-								onclick="irPara('/ecommerce-web/admin/cliente/editar-taglib.jsp?id=${cliente.id}')">
-								Editar
-							</button>
-							<br>
-							<button type="button" onclick="confirmaExclusao(${cliente.id})">
-								Excluir
-							</button>
-						</td>
-					</tr>
-				</c:forEach>
-			</c:when>
-			<c:otherwise>
+<div class="row">
+	<div class="col-12">
+		<h3>Cadastro de Clientes</h3>
+		<nav>
+			<ul class="nav justify-content-end">
+				<li class="nav-item">
+					<a class="btn btn-primary" href="editar-taglib.jsp">
+						<i class="fa fa-plus-square"></i> Novo Cliente
+					</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+</div>
+<div class="row">
+	<div class="col-12">
+		<table class="table table-striped table-hover">
+			<thead>
 				<tr>
-					<td colspan="5">
-						<em>Nenhum Cliente foi encontrado.</em>
-					</td>
+					<th scope="col">Nome</th>
+					<th scope="col">E-mail</th>
+					<th scope="col">Endereço</th>
+					<th scope="col">Data de Nascimento</th>
+					<th scope="col">Opções</th>
 				</tr>
-			</c:otherwise>
-		</c:choose>
-	</tbody>
-</table>
+			</thead>
+			<tbody>
+				<c:choose>
+					<c:when test="${!empty clientes}">
+						<c:forEach items="${clientes}" var="cliente" varStatus="index">
+							<tr>
+								<td>${cliente.nome}</td>
+								<td>${cliente.email}</td>
+								<td>${cliente.endereco}</td>
+								<td>
+									<fmt:formatDate var="dataNascimento" value="${ cliente.dataNascimento.time }" 
+										pattern="dd/MM/yyyy"/>
+									${dataNascimento}
+								</td>
+								<td class="text-center">
+									<div class="dropdown">
+										<button type="button" class="btn btn-sm btn-outline-primary" data-toggle="dropdown" 
+											data-offset="-130,0" aria-haspopup="true" aria-expanded="false">
+											<i class="fa fa-bars"></i>
+										</button>
+										<div class="dropdown-menu">
+											<a class="dropdown-item text-primary" 
+												href="/ecommerce-web/admin/cliente/editar-taglib.jsp?id=${cliente.id}">
+												<i class="fa fa-edit"></i> Editar
+											</a>
+											<a class="dropdown-item text-danger" href="#" onclick="confirmaExclusao(${cliente.id})">
+												<i class="fa fa-trash"></i> Excluir
+											</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<tr>
+							<td colspan="5">
+								<em>Nenhum Cliente foi encontrado.</em>
+							</td>
+						</tr>
+					</c:otherwise>
+				</c:choose>
+			</tbody>
+		</table>
+	</div>
+</div>
 <script>
 	const confirmaExclusao = (id) => {
 		if (confirm('Deseja excluir este cliente?')) {

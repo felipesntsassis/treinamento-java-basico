@@ -19,8 +19,8 @@
 		<input type="hidden" name="id" value="${categoria.id}">
 	</c:if>
 	<div class="row">
-		<div class="col-12">
-			<span class="required">Campos obrigatórios</span>
+		<div class="form-group col-12">
+			<small class="required">Campos obrigatórios</small>
 		</div>
 	</div>
 	<div class="row">
@@ -30,7 +30,6 @@
 				class="form-control" size="50" maxlength="100" required autofocus>
 		</div>
 	</div>
-	
 	<ul class="nav">
 		<li class="nav-item mr-2">
 			<button type="submit" class="btn btn-success">

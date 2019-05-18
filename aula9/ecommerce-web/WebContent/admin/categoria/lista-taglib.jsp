@@ -20,14 +20,13 @@
 		</nav>
 	</div>
 </div>
-
 <div class="row">
 	<div class="col-12">
 		<table class="table table-striped table-hover">
 			<thead>
-				<tr class="table-primary">
-					<th class="col-10">Descrição</th>
-					<th class="col-2 text-center">Opções</th>
+				<tr>
+					<th scope="col" class="col-10">Descrição</th>
+					<th scope="col" class="col-2 text-center">Opções</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -41,7 +40,7 @@
 									<div class="dropdown">
 										<button type="button" class="btn btn-sm btn-outline-primary" data-toggle="dropdown" 
 											data-offset="-130,0" aria-haspopup="true" aria-expanded="false">
-											...
+											<i class="fa fa-bars"></i>
 										</button>
 										<div class="dropdown-menu">
 											<a class="dropdown-item text-primary" 

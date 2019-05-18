@@ -19,33 +19,53 @@
 	<c:if test="${edicao}">
 		<input type="hidden" name="id" value="${vendedor.id}">
 	</c:if>
-	<small>* Campos obrigatórios</small>
-	<p>
-		<label>* Nome:</label><br>
-		<input type="text" name="nome" value="${vendedor.nome}" maxlength="100" 
-		required autofocus>
-	</p>
-	<p>
-		<label for="txt-email">* E-mail:</label><br>
-		<input type="email"name="email" value="${vendedor.email}" id="txt-email" 
-			maxlength="100" required>
-	</p>
-	<p>
-		<label>* Departamento:</label><br>
-		<input type="text" name="departamento" value="${vendedor.departamento}" 
-			maxlength="100" required>
-	</p>
-	<p>
-		<label>* Percentual de Comissão:</label><br>
-		<fmt:formatNumber var="percentualComissao" value="${vendedor.percentualComissao}"
-			type="number" minFractionDigits="2" maxFractionDigits="2"/>
-		<input type="text" name="percComissao" value="${percentualComissao}" maxlength="5" 
-			required> %
-	</p>
-	<p>
-		<button type="submit">Salvar</button>
-		<button type="button" onclick="irPara('lista-taglib.jsp');">Voltar</button>
-	</p>
+	<div class="row">
+		<div class="form-group col-12">
+			<small class="required">Campos obrigatórios</small>
+		</div>
+	</div>
+	<div class="row">
+		<div class="form-group col-12 col-lg-6">
+			<label for="txt-nome" class="required">Nome:</label>
+			<input type="text" name="nome" id="txt-nome" value="${vendedor.nome}" class="form-control" maxlength="100" 
+				required autofocus>
+		</div>
+		<div class="form-group col-12 col-lg-6">
+			<label for="txt-email" class="required">E-mail:</label>
+			<input type="email" name="email" id="txt-email" class="form-control" value="${vendedor.email}" id="txt-email" 
+				maxlength="100" required>
+		</div>
+		<div class="form-group col-12 col-lg-6">
+			<label for="txt-departamento" class="required">Departamento:</label>
+			<input type="text" name="departamento" id="txt-departamento" class="form-control" 
+				value="${vendedor.departamento}" maxlength="100" required>
+		</div>
+		<div class="form-group col-12 col-lg-3">
+			<label for="txt-perc-comissao" class="required">Percentual de Comissão:</label>
+			<div class="input-group">
+				<fmt:formatNumber var="percentualComissao" value="${vendedor.percentualComissao}"
+					type="number" minFractionDigits="2" maxFractionDigits="2"/>
+				<input type="text" name="percComissao" id="txt-perc-comissao" class="form-control"
+					 value="${percentualComissao}" maxlength="5" required>
+				<div class="input-group-append">
+					<div class="input-group-text">%</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<ul class="nav">
+		<li class="nav-item mr-2">
+			<button type="submit" class="btn btn-success">
+				<i class="fa fa-save"></i> Salvar
+			</button>
+		</li>
+		<li class="nav-item">
+			<button type="button" class="btn btn-outline-secondary" 
+				onclick="irPara('lista-taglib.jsp');">
+				<i class="fa fa-reply"></i> Voltar
+			</button>
+		</li>
+	</ul>
 </form>
 
 <c:import url="/rodape.jsp"/>
