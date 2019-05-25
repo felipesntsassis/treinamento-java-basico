@@ -1,11 +1,11 @@
 package br.com.escolpi.ecommerce.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -66,7 +66,7 @@ public class AdicionaClienteServlet extends HttpServlet {
 		}
 
 		salvarEnderecoPrincipal(req, cliente);
-		feedback(acao, resp);
+		feedback(acao, req, resp);
 	}
 
 	@Override
@@ -76,23 +76,14 @@ public class AdicionaClienteServlet extends HttpServlet {
 			throw new IllegalArgumentException("Parâmetro ID é obrigatório");
 		
 		dao.remover(Long.valueOf(req.getParameter("id")));
-		feedback("excluído", resp);
+		feedback("excluído", req, resp);
 	}
 
-	private void feedback(String acao, HttpServletResponse resp) throws IOException {
-		resp.addHeader("Content-Type", "text/html; charset=UTF-8");
-		PrintWriter out = resp.getWriter();
-		StringBuilder resposta = new StringBuilder();
-		resposta
-			.append("<html>")
-			.append("	<body>")
-			.append("		<h3>Cliente %s com sucesso!</h3>")
-			.append("		<a href=\"/ecommerce-web/admin/cliente/editar-taglib.jsp\">Novo Cliente</a>")
-			.append("		&nbsp;")
-			.append("		<a href=\"/ecommerce-web/admin/cliente/lista-taglib.jsp\">Voltar</a>")
-			.append("	</body>")
-			.append("</html>");
-		out.println(String.format(resposta.toString(), acao));
+	private void feedback(String acao, HttpServletRequest req, HttpServletResponse resp) 
+			throws IOException, ServletException {
+		RequestDispatcher rd= req.getRequestDispatcher("/admin/cliente/feedback.jsp");
+		req.setAttribute("acao", acao);
+		rd.forward(req, resp);
 	}
 
 	private void salvarEnderecoPrincipal(HttpServletRequest req, Cliente cliente) {

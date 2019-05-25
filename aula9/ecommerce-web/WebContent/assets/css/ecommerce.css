@@ -76,11 +76,7 @@ nav > ul > li a:hover {
 	text-align: center;
 }
 
-.required:before {
-	content: '*';
-	color: #DC3545;
-	padding-right: 8px;
-}
+
 
 * Dimensões *
 .w-10 { width: 10% !important; }
@@ -96,3 +92,8 @@ nav > ul > li a:hover {
 .w-100 { width: 100% !important; }
 
  */
+ .required:before {
+	content: '*';
+	color: #DC3545;
+	padding-right: 8px;
+}
