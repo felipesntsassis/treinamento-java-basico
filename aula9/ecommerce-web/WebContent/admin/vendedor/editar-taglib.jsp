@@ -24,7 +24,7 @@
 			<small class="required">Campos obrigatórios</small>
 		</div>
 	</div>
-	<div class="row">
+	<div class="row mb-3">
 		<div class="form-group col-12 col-lg-6">
 			<label for="txt-nome" class="required">Nome:</label>
 			<input type="text" name="nome" id="txt-nome" value="${vendedor.nome}" class="form-control" maxlength="100" 
@@ -53,19 +53,12 @@
 			</div>
 		</div>
 	</div>
-	<ul class="nav">
-		<li class="nav-item mr-2">
-			<button type="submit" class="btn btn-success">
-				<i class="fa fa-save"></i> Salvar
-			</button>
-		</li>
-		<li class="nav-item">
-			<button type="button" class="btn btn-outline-secondary" 
-				onclick="irPara('lista-taglib.jsp');">
-				<i class="fa fa-reply"></i> Voltar
-			</button>
-		</li>
-	</ul>
+	<button type="button" class="btn btn-outline-secondary mr-2" onclick="irPara('lista-taglib.jsp');" tabindex="-1">
+		<i class="fa fa-reply"></i> Voltar
+	</button>
+	<button type="submit" class="btn btn-success">
+		<i class="fa fa-save"></i> Salvar
+	</button>
 </form>
 
 <c:import url="/rodape.jsp"/>

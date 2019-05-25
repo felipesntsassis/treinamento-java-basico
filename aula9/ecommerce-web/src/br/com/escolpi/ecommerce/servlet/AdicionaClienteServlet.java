@@ -17,6 +17,7 @@ import br.com.escolpi.ecommerce.jdbc.dao.ClienteDao;
 import br.com.escolpi.ecommerce.jdbc.dao.EnderecoDao;
 import br.com.escolpi.ecommerce.modelo.Cliente;
 import br.com.escolpi.ecommerce.modelo.Endereco;
+import br.com.escolpi.ecommerce.util.StringUtil;
 
 @WebServlet("/admin/cliente")
 public class AdicionaClienteServlet extends HttpServlet {
@@ -36,6 +37,7 @@ public class AdicionaClienteServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
 		Cliente cliente = new Cliente();
 
 		if (req.getParameter("id") != null)
@@ -95,12 +97,12 @@ public class AdicionaClienteServlet extends HttpServlet {
 	private void incluirEnderecoPrincipal(HttpServletRequest req, Cliente cliente) {
 		Endereco endereco = new Endereco();
 		endereco.setClienteId(cliente.getId());
-		endereco.setCep(req.getParameter("cep"));
-		endereco.setLogradouro(req.getParameter("logradouro"));
+		endereco.setCep(StringUtil.removerCaracteresEspeciais(req.getParameter("cep")));
+		endereco.setLogradouro(req.getParameter("endereco"));
 		endereco.setNumero(req.getParameter("numero"));
 		endereco.setBairro(req.getParameter("bairro"));
 		endereco.setComplemento(req.getParameter("complemento"));
-		endereco.setEstado(Estados.obterPorCodigo(Integer.valueOf(req.getParameter("estado"))));
+		endereco.setEstado(Estados.obterPorSigla(req.getParameter("estado")));
 		endereco.setMunicipio(req.getParameter("municipio"));
 		endereco.setEnderecoPrincipal(true);
 		enderecoDao.adicionar(endereco);

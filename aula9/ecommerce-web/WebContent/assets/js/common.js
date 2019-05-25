@@ -22,3 +22,7 @@ const converterParaFloat = (str) => {
 
 	return parseFloat(str.replace(',', ''));
 }
+
+const iniciarMascaras = () => {
+	$('.moeda').mask('#.##0,00', {reverse: true});
+}

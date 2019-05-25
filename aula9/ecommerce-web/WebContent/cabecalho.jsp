@@ -15,6 +15,7 @@
 		<script src="/ecommerce-web/assets/js/bootstrap/js/bootstrap.min.js"></script>
 		<script src="/ecommerce-web/assets/js/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 		<script src="/ecommerce-web/assets/js/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+		<script src="/ecommerce-web/assets/js/jquery-mask/jquery.mask.min.js"></script>
 	</head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">

@@ -64,7 +64,13 @@ public enum Estados {
 		return getLista().stream()
 				.filter(estado -> estado.getCodigoIbge() == codigoIbge)
 				.findFirst()
-				.get();
+				.orElse(null);
 	}
 
+	public static Estados obterPorSigla(String sigla) {
+		return getLista().stream()
+				.filter(estado -> estado.toString().contentEquals(sigla))
+				.findFirst()
+				.orElse(null);
+	}
 }

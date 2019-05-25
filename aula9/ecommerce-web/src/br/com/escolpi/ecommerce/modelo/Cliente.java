@@ -38,8 +38,8 @@ public class Cliente extends Pessoa {
 		}
 
 		return enderecosDeEntrega.stream()
-				.filter(endereco -> endereco.isEnderecoPrincipal())
-				.findFirst()
-				.get();
+			.filter(endereco -> endereco.isEnderecoPrincipal())
+			.findFirst()
+			.orElse(new Endereco());
 	}
 }

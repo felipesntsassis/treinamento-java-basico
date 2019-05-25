@@ -2,7 +2,7 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@ attribute name="endereco" required="true" %>
+<%@ attribute name="endereco" required="true" type="br.com.escolpi.ecommerce.modelo.Endereco" %>
 
 <c:set var="estados" value="<%=Estados.getLista()%>"/>
 
@@ -62,11 +62,12 @@
 			$('.campo-endereco input').val('Pesquisando Endereço...');
 		}
 
-		$('.campo-endereco input').prop('readonly', bloquear);
+		$('.campo-endereco input').prop('disabled', bloquear);
 		$('#combo-estado').prop('disabled', bloquear);
 	};
 
 	const pesquisarEnderecoPorCep = (cep) => {
+		cep = cep.replace(/[^0-9]+/g, '');
 		const cepValido = new RegExp(/\d+/g);
 		
 		if (cep.length === 8 && cepValido.test(cep)) {
@@ -99,6 +100,7 @@
 
 	$(() => {
 		// Evento input para o campo CEP
+		$('#txt-cep').mask('00000-000');
 		$('#txt-cep').on('input', (event) => pesquisarEnderecoPorCep(event.currentTarget.value));
 	});
 </script>

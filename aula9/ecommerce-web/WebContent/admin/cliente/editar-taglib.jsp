@@ -28,7 +28,8 @@
 	<div class="row">
 		<div class="form-group col-12 col-lg-6">
 			<label for="txt-nome" class="required">Nome:</label>
-			<input type="text" name="nome" id="txt-nome" class="form-control" value="${cliente.nome}" maxlength="100" required autofocus>
+			<input type="text" name="nome" id="txt-nome" class="form-control" value="${cliente.nome}" maxlength="100" 
+				required autofocus>
 		</div>
 		<div class="form-group col-12 col-lg-6">
 			<label for="txt-email" class="required">E-mail:</label>
@@ -37,7 +38,7 @@
 		</div>
 	</div>
 	<escolpi:endereco endereco="${cliente.endereco}"/>
-	<div class="row">
+	<div class="row mb-3">
 		<div class="form-group col-12 col-lg-3">
 			<label for="txt-data-nascimento" class="required">Data de Nascimento:</label>
 			<fmt:formatDate var="dataNascimento" value="${cliente.dataNascimento.time}" 
@@ -46,19 +47,12 @@
 				id="txt-data-nascimento" required="false"/>
 		</div>
 	</div>
-	<ul class="nav">
-		<li class="nav-item mr-2">
-			<button type="submit" class="btn btn-success">
-				<i class="fa fa-save"></i> Salvar
-			</button>
-		</li>
-		<li class="nav-item">
-			<button type="button" class="btn btn-outline-secondary" 
-				onclick="irPara('lista-taglib.jsp');">
-				<i class="fa fa-reply"></i> Voltar
-			</button>
-		</li>
-	</ul>
+	<button type="button" class="btn btn-outline-secondary mr-2" onclick="irPara('lista-taglib.jsp');" tabindex="-1">
+		<i class="fa fa-reply"></i> Voltar
+	</button>
+	<button type="submit" class="btn btn-success">
+		<i class="fa fa-save"></i> Salvar
+	</button>
 </form>
 
 <c:import url="/rodape.jsp"/>

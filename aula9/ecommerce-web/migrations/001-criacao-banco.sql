@@ -33,7 +33,7 @@ CREATE TABLE `enderecos` (
   PRIMARY KEY (`id`),
   KEY `enderecos_clientes_FK` (`cliente_id`),
   CONSTRAINT `enderecos_clientes_FK` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 CREATE TABLE `vendedores` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,

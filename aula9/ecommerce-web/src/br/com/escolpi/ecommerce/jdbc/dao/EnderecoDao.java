@@ -4,7 +4,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import br.com.escolpi.ecommerce.enumerador.Estados;
 import br.com.escolpi.ecommerce.modelo.Endereco;
@@ -84,6 +86,30 @@ public class EnderecoDao extends GenericDao<Endereco> {
 			closeConnection();
 		}
 
+		return enderecos;
+	}
+
+	public Set<Endereco> listarPorClienteId(Long clienteId) {
+		String sql = "SELECT e.* FROM enderecos e INNER JOIN clientes c ON e.cliente_id = c.id "
+				+ "WHERE e.cliente_id = ? ORDER BY id";
+		Set<Endereco> enderecos = new HashSet<>();
+		
+		try {
+			PreparedStatement stmt = openConnection().prepareStatement(sql);
+			stmt.setLong(1, clienteId);
+			ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				enderecos.add(popularEntidade(rs));
+			}
+			
+			stmt.close();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			closeConnection();
+		}
+		
 		return enderecos;
 	}
 

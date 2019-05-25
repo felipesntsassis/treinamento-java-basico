@@ -16,7 +16,7 @@ public class ClienteDao extends GenericDao<Cliente> {
 	@Override
 	public void adicionar(Cliente cliente) {
 		String sql = "INSERT INTO clientes (nome, email, data_nascimento) "
-				+ "VALUES (?, ?, ?, ?)";
+				+ "VALUES (?, ?, ?)";
 		try {
 			PreparedStatement stmt = openConnection().prepareStatement(sql, 
 					PreparedStatement.RETURN_GENERATED_KEYS);
@@ -56,10 +56,11 @@ public class ClienteDao extends GenericDao<Cliente> {
 
 	@Override
 	public List<Cliente> listar() {
+		String sql = "SELECT * FROM clientes ORDER BY id";
 		List<Cliente> clientes = new ArrayList<>();
 
 		try {
-			PreparedStatement stmt = openConnection().prepareStatement("SELECT * FROM clientes ORDER BY id");
+			PreparedStatement stmt = openConnection().prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
@@ -116,6 +117,7 @@ public class ClienteDao extends GenericDao<Cliente> {
 
 	@Override
 	public Cliente popularEntidade(ResultSet rs) throws SQLException {
+		EnderecoDao enderecoDao = new EnderecoDao();
 		Cliente cliente = new Cliente();
 		cliente.setId(rs.getLong("id"));
 		cliente.setNome(rs.getString("nome"));
@@ -123,6 +125,7 @@ public class ClienteDao extends GenericDao<Cliente> {
 		Calendar dataNascimento = Calendar.getInstance();
 		dataNascimento.setTime(rs.getDate("data_nascimento"));
 		cliente.setDataNascimento(dataNascimento);
+		cliente.setEnderecosDeEntrega(enderecoDao.listarPorClienteId(cliente.getId()));
 	
 		return cliente;
 	}

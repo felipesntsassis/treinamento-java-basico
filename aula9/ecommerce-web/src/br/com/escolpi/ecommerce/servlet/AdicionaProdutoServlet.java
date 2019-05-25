@@ -43,20 +43,21 @@ public class AdicionaProdutoServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
 		Produto produto = new Produto();
-		String idRequest = request.getParameter("id");
+		String idRequest = req.getParameter("id");
 		String acao = "incluído";
 
 		if (idRequest != null && idRequest != "") {
 			produto.setId(Long.valueOf(idRequest));
 		}
 
-		produto.setDescricao(request.getParameter("descricao"));
-		produto.setCategoria(new Categoria(Long.valueOf(request.getParameter("categoria"))));
-		produto.setQuantidade(Integer.valueOf(request.getParameter("quantidade")));
-		Double preco = Double.valueOf(request.getParameter("preco"));
+		produto.setDescricao(req.getParameter("descricao"));
+		produto.setCategoria(new Categoria(Long.valueOf(req.getParameter("categoria"))));
+		produto.setQuantidade(Integer.valueOf(req.getParameter("quantidade")));
+		Double preco = Double.valueOf(req.getParameter("preco"));
 		produto.setPreco(preco);
 
 		if (produto.getId() != null && produto.getId() > 0) {
@@ -66,7 +67,7 @@ public class AdicionaProdutoServlet extends HttpServlet {
 			dao.adicionar(produto);
 		}
 
-		feedback(acao, response);
+		feedback(acao, resp);
 	}
 
 	private void feedback(String acao, HttpServletResponse resp) throws IOException {

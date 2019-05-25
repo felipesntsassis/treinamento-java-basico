@@ -28,6 +28,7 @@ public class AdicionaVendedorServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
 				throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
 		Vendedor vendedor = new Vendedor();
 
 		if (req.getParameter("id") != null)

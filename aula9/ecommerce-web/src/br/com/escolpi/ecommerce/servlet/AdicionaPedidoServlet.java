@@ -60,6 +60,7 @@ public class AdicionaPedidoServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
 		Pedido pedido = new Pedido();
 		pedido.setCliente(clienteDao.obter(Long.valueOf(req.getParameter("clienteId"))));
 		pedido.setSituacao(SituacaoPedido.NOVO);
