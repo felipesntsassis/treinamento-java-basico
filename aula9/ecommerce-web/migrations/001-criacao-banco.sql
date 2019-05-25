@@ -19,6 +19,22 @@ CREATE TABLE `clientes` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+CREATE TABLE `enderecos` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `cliente_id` bigint(20) NOT NULL,
+  `cep` varchar(8) COLLATE utf8_bin NOT NULL,
+  `logradouro` varchar(120) COLLATE utf8_bin NOT NULL,
+  `numero` varchar(10) COLLATE utf8_bin DEFAULT NULL,
+  `bairro` varchar(120) COLLATE utf8_bin NOT NULL,
+  `complemento` varchar(120) COLLATE utf8_bin DEFAULT NULL,
+  `estado_id` int(11) NOT NULL,
+  `municipio` varchar(120) COLLATE utf8_bin NOT NULL,
+  `endereco_principal` tinyint(1) DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `enderecos_clientes_FK` (`cliente_id`),
+  CONSTRAINT `enderecos_clientes_FK` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+
 CREATE TABLE `vendedores` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `nome` varchar(255) COLLATE utf8_bin DEFAULT NULL,
