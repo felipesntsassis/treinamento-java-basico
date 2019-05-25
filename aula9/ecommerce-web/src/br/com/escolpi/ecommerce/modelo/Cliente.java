@@ -1,24 +1,18 @@
 package br.com.escolpi.ecommerce.modelo;
 
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Cliente extends Pessoa {
 
-	private String endereco;
 	private Calendar dataNascimento;
+	private Set<Endereco> enderecosDeEntrega;
 
 	public Cliente() { }
 
 	public Cliente(Long id) {
 		this.setId(id);
-	}
-
-	public String getEndereco() {
-		return endereco;
-	}
-
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
 	}
 
 	public Calendar getDataNascimento() {
@@ -29,4 +23,23 @@ public class Cliente extends Pessoa {
 		this.dataNascimento = dataNascimento;
 	}
 
+	public Set<Endereco> getEnderecosDeEntrega() {
+		return enderecosDeEntrega;
+	}
+
+	public void setEnderecosDeEntrega(Set<Endereco> enderecosDeEntrega) {
+		this.enderecosDeEntrega = enderecosDeEntrega;
+	}
+
+	public Endereco getEndereco() {
+		if (enderecosDeEntrega == null) {
+			enderecosDeEntrega = new HashSet<>();
+			enderecosDeEntrega.add(new Endereco());
+		}
+
+		return enderecosDeEntrega.stream()
+				.filter(endereco -> endereco.isEnderecoPrincipal())
+				.findFirst()
+				.get();
+	}
 }

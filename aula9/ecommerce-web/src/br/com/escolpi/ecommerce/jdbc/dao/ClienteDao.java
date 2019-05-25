@@ -15,16 +15,17 @@ public class ClienteDao extends GenericDao<Cliente> {
 
 	@Override
 	public void adicionar(Cliente cliente) {
-		String sql = "INSERT INTO clientes (nome, email, endereco, data_nascimento) "
+		String sql = "INSERT INTO clientes (nome, email, data_nascimento) "
 				+ "VALUES (?, ?, ?, ?)";
 		try {
-			PreparedStatement stmt = openConnection().prepareStatement(sql);
+			PreparedStatement stmt = openConnection().prepareStatement(sql, 
+					PreparedStatement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, cliente.getNome());
 			stmt.setString(2, cliente.getEmail());
-			stmt.setString(3, cliente.getEndereco());
-			stmt.setDate(4, new Date(cliente.getDataNascimento().getTimeInMillis()));
+			stmt.setDate(3, new Date(cliente.getDataNascimento().getTimeInMillis()));
 			
 			stmt.execute();
+			cliente.setId(obterId(stmt));
 			stmt.close();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -35,19 +36,17 @@ public class ClienteDao extends GenericDao<Cliente> {
 
 	@Override
 	public void alterar(Cliente entidade) {
-		String sql = "UPDATE clientes SET nome = ?, email = ?, endereco = ?, data_nascimento = ? "
+		String sql = "UPDATE clientes SET nome = ?, email = ?, data_nascimento = ? "
 				+ "WHERE id = ?";
 		try {
 			PreparedStatement stmt = openConnection().prepareStatement(sql);
 			stmt.setString(1, entidade.getNome());
 			stmt.setString(2, entidade.getEmail());
-			stmt.setString(3, entidade.getEndereco());
-			stmt.setDate(4, new Date(entidade.getDataNascimento().getTimeInMillis()));
-			stmt.setLong(5, entidade.getId());
+			stmt.setDate(3, new Date(entidade.getDataNascimento().getTimeInMillis()));
+			stmt.setLong(4, entidade.getId());
 			
 			stmt.execute();
 			stmt.close();
-			System.out.println("Alterado!");
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
@@ -121,11 +120,11 @@ public class ClienteDao extends GenericDao<Cliente> {
 		cliente.setId(rs.getLong("id"));
 		cliente.setNome(rs.getString("nome"));
 		cliente.setEmail(rs.getString("email"));
-		cliente.setEndereco(rs.getString("endereco"));
 		Calendar dataNascimento = Calendar.getInstance();
 		dataNascimento.setTime(rs.getDate("data_nascimento"));
 		cliente.setDataNascimento(dataNascimento);
 	
 		return cliente;
 	}
+
 }

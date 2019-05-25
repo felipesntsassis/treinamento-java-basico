@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@taglib tagdir="/WEB-INF/tags" prefix="escolpi" %>
 
 <c:if test="${ empty param.id }">
 	<jsp:useBean id="cliente" class="br.com.escolpi.ecommerce.modelo.Cliente"/>
@@ -15,13 +16,13 @@
 <c:import url="/cabecalho.jsp"/>
 
 <h3>${edicao ? "Editar" : "Cadastrar"} Cliente</h3>
-<form action="/ecommerce-web/admin/cliente" method="POST">
+<form action="/ecommerce-web/admin/cliente" method="POST" autocomplete="off">
 	<c:if test="${edicao}">
 		<input type="hidden" name="id" value="${cliente.id}">
 	</c:if>
 	<div class="row">
 		<div class="form-group col-12">
-			<small class="required">* Campos obrigatórios</small>
+			<small class="required">Campos obrigatórios</small>
 		</div>
 	</div>
 	<div class="row">
@@ -34,16 +35,15 @@
 			<input type="email"name="email" class="form-control" value="${cliente.email}" id="txt-email" 
 				maxlength="100" required>
 		</div>
-		<div class="form-group col-12">
-			<label for="txt-endereco" class="required">Endereço:</label>
-			<input type="text" name="endereco" class="form-control" value="${cliente.endereco}" maxlength="100" required>
-		</div>
-		<div class="form-group col-12 col-lg-4">
+	</div>
+	<escolpi:endereco endereco="${cliente.endereco}"/>
+	<div class="row">
+		<div class="form-group col-12 col-lg-3">
 			<label for="txt-data-nascimento" class="required">Data de Nascimento:</label>
 			<fmt:formatDate var="dataNascimento" value="${cliente.dataNascimento.time}" 
 				pattern="dd/MM/yyyy"/>
-			<input type="text" name="dataNascimento" id="txt-data-nascimento" class="form-control" 
-				value="${dataNascimento}" maxlength="100" required>
+			<escolpi:campoData name="dataNascimento" value="${dataNascimento}" 
+				id="txt-data-nascimento" required="false"/>
 		</div>
 	</div>
 	<ul class="nav">

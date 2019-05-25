@@ -9,9 +9,12 @@
 		<link href="/ecommerce-web/assets/css/fontawesome/css/all.css" rel="stylesheet">
 		<link href="/ecommerce-web/assets/css/ecommerce.css" rel="stylesheet">
 		<link href="/ecommerce-web/assets/js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/ecommerce-web/assets/js/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
 		<script src="/ecommerce-web/assets/js/jquery-3.4.0.min.js"></script>
 		<script src="/ecommerce-web/assets/js/popper.min.js"></script>
 		<script src="/ecommerce-web/assets/js/bootstrap/js/bootstrap.min.js"></script>
+		<script src="/ecommerce-web/assets/js/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+		<script src="/ecommerce-web/assets/js/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
 	</head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">

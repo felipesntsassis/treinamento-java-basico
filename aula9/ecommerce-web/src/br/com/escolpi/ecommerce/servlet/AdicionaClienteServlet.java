@@ -12,8 +12,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.com.escolpi.ecommerce.enumerador.Estados;
 import br.com.escolpi.ecommerce.jdbc.dao.ClienteDao;
+import br.com.escolpi.ecommerce.jdbc.dao.EnderecoDao;
 import br.com.escolpi.ecommerce.modelo.Cliente;
+import br.com.escolpi.ecommerce.modelo.Endereco;
 
 @WebServlet("/admin/cliente")
 public class AdicionaClienteServlet extends HttpServlet {
@@ -21,11 +24,13 @@ public class AdicionaClienteServlet extends HttpServlet {
 	private static final long serialVersionUID = -7974124277262901066L;
 
 	private ClienteDao dao;
+	private EnderecoDao enderecoDao;
 	
 	@Override
 	public void init() throws ServletException {
 		super.init();
 		dao = new ClienteDao();
+		enderecoDao = new EnderecoDao();
 	}
 
 	@Override
@@ -38,7 +43,6 @@ public class AdicionaClienteServlet extends HttpServlet {
 
 		cliente.setNome(req.getParameter("nome"));
 		cliente.setEmail(req.getParameter("email"));
-		cliente.setEndereco(req.getParameter("endereco"));
 		Calendar dataNascimento = Calendar.getInstance();
 
 		try {
@@ -58,6 +62,7 @@ public class AdicionaClienteServlet extends HttpServlet {
 			dao.adicionar(cliente);
 		}
 
+		incluirEnderecoPrincipal(req, cliente);
 		feedback(acao, resp);
 	}
 
@@ -85,6 +90,20 @@ public class AdicionaClienteServlet extends HttpServlet {
 			.append("	</body>")
 			.append("</html>");
 		out.println(String.format(resposta.toString(), acao));
+	}
+
+	private void incluirEnderecoPrincipal(HttpServletRequest req, Cliente cliente) {
+		Endereco endereco = new Endereco();
+		endereco.setClienteId(cliente.getId());
+		endereco.setCep(req.getParameter("cep"));
+		endereco.setLogradouro(req.getParameter("logradouro"));
+		endereco.setNumero(req.getParameter("numero"));
+		endereco.setBairro(req.getParameter("bairro"));
+		endereco.setComplemento(req.getParameter("complemento"));
+		endereco.setEstado(Estados.obterPorCodigo(Integer.valueOf(req.getParameter("estado"))));
+		endereco.setMunicipio(req.getParameter("municipio"));
+		endereco.setEnderecoPrincipal(true);
+		enderecoDao.adicionar(endereco);
 	}
 
 }
