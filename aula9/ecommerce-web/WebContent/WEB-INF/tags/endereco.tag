@@ -6,8 +6,8 @@
 
 <c:set var="estados" value="<%=Estados.getLista()%>"/>
 
-
 <div class="row">
+	<input type="hidden" id="hd-endereco-id" name="enderecoId" value="${endereco.id}">
 	<div class="form-group col-12 col-lg-2">
 		<label for="txt-cep" class="required">CEP:</label>
 		<input type="text" name="cep" id="txt-cep" class="form-control" 

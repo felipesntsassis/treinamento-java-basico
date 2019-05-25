@@ -29,7 +29,7 @@ public class NumberUtil {
 		return (comSimbolo ? "R$ " : "") + nf.format(numero);
 	}
 
-	public static boolean isNullOrEmpty(Number valor) {
+	public static boolean isNullOrZero(Number valor) {
 		return valor == null || valor.equals(0);
 	}
 

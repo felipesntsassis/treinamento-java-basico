@@ -17,6 +17,7 @@ import br.com.escolpi.ecommerce.jdbc.dao.ClienteDao;
 import br.com.escolpi.ecommerce.jdbc.dao.EnderecoDao;
 import br.com.escolpi.ecommerce.modelo.Cliente;
 import br.com.escolpi.ecommerce.modelo.Endereco;
+import br.com.escolpi.ecommerce.util.NumberUtil;
 import br.com.escolpi.ecommerce.util.StringUtil;
 
 @WebServlet("/admin/cliente")
@@ -64,7 +65,7 @@ public class AdicionaClienteServlet extends HttpServlet {
 			dao.adicionar(cliente);
 		}
 
-		incluirEnderecoPrincipal(req, cliente);
+		salvarEnderecoPrincipal(req, cliente);
 		feedback(acao, resp);
 	}
 
@@ -94,8 +95,12 @@ public class AdicionaClienteServlet extends HttpServlet {
 		out.println(String.format(resposta.toString(), acao));
 	}
 
-	private void incluirEnderecoPrincipal(HttpServletRequest req, Cliente cliente) {
+	private void salvarEnderecoPrincipal(HttpServletRequest req, Cliente cliente) {
 		Endereco endereco = new Endereco();
+
+		if (!StringUtil.isBlank(req.getParameter("enderecoId")))
+			endereco.setId(Long.valueOf(req.getParameter("enderecoId")));
+
 		endereco.setClienteId(cliente.getId());
 		endereco.setCep(StringUtil.removerCaracteresEspeciais(req.getParameter("cep")));
 		endereco.setLogradouro(req.getParameter("endereco"));
@@ -105,7 +110,13 @@ public class AdicionaClienteServlet extends HttpServlet {
 		endereco.setEstado(Estados.obterPorSigla(req.getParameter("estado")));
 		endereco.setMunicipio(req.getParameter("municipio"));
 		endereco.setEnderecoPrincipal(true);
-		enderecoDao.adicionar(endereco);
+		
+		if (!NumberUtil.isNullOrZero(endereco.getId())) {
+			enderecoDao.alterar(endereco);
+		} else {
+			enderecoDao.adicionar(endereco);
+			
+		}
 	}
 
 }
