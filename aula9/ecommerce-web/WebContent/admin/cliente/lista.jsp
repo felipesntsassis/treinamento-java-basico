@@ -1,10 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-
-<jsp:useBean id="dao" class="br.com.escolpi.ecommerce.jdbc.dao.ClienteDao"/>
-<c:set var="clientes" value="${dao.listar()}"/>
 
 <c:import url="/cabecalho.jsp"/>
 
@@ -14,7 +10,7 @@
 		<nav class="mb-2">
 			<ul class="nav justify-content-end">
 				<li class="nav-item">
-					<a class="btn btn-primary" href="editar-taglib.jsp">
+					<a class="btn btn-primary" href="/ecommerce-web/mvc?logica=EditarCliente">
 						<i class="fa fa-plus-square"></i> Novo Cliente
 					</a>
 				</li>
@@ -54,7 +50,7 @@
 											</button>
 											<div class="dropdown-menu">
 												<a class="dropdown-item text-primary" 
-													href="/ecommerce-web/admin/cliente/editar-taglib.jsp?id=${cliente.id}">
+													href="/ecommerce-web/mvc?logica=EditarCliente&id=${cliente.id}">
 													<i class="fa fa-edit"></i> Editar
 												</a>
 												<a class="dropdown-item text-danger" href="#" onclick="confirmaExclusao(${cliente.id})">
@@ -82,7 +78,7 @@
 <script>
 	const confirmaExclusao = (id) => {
 		if (confirm('Deseja excluir este cliente?')) {
-			irPara('/ecommerce-web/admin/cliente?id=' + id);
+			irPara('/ecommerce-web/mvc?logica=ExcluirCliente&id=' + id);
 		}
 	};
 </script>

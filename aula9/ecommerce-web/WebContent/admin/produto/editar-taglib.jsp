@@ -58,7 +58,7 @@
 				</div>
 				<fmt:formatNumber var="preco" value="${produto.preco}" type="number"
 					minFractionDigits="2" maxFractionDigits="2"/>
-				<input type="text" id="txt-preco" name="preco" value="${preco}" class="form-control" size="20" 
+				<input type="text" id="txt-preco" name="preco" value="${preco}" class="form-control moeda" size="20" 
 					maxlength="10" required>
 			</div>
 		</div>
@@ -70,5 +70,9 @@
 		<i class="fa fa-save"></i> Salvar
 	</button>
 </form>
+
+<script>
+	$(() => iniciarMascaras());
+</script>
 
 <c:import url="/rodape.jsp"/>

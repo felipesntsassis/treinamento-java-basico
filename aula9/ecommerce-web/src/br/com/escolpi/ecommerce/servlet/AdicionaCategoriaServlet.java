@@ -1,8 +1,8 @@
 package br.com.escolpi.ecommerce.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -46,7 +46,7 @@ public class AdicionaCategoriaServlet extends HttpServlet {
 			dao.adicionar(categoria);
 		}
 
-		feedback(acao, resp);
+		feedback(acao, req, resp);
 	}
 
 	@Override
@@ -59,23 +59,14 @@ public class AdicionaCategoriaServlet extends HttpServlet {
 		}
 
 		dao.remover(Long.valueOf(idRequest));
-		feedback("excluída", resp);
+		feedback("excluída", req, resp);
 	}
 
-	private void feedback(String acao, HttpServletResponse resp) throws IOException {
-		resp.addHeader("Content-Type", "text/html; charset=UTF-8");
-		PrintWriter out = resp.getWriter();
-		StringBuilder resposta = new StringBuilder();
-		resposta
-			.append("<html>")
-			.append("	<body>")
-			.append("		<h3>Categoria %s com sucesso!</h3>")
-			.append("		<a href=\"/ecommerce-web/admin/categoria/editar-taglib.jsp\">Nova Categoria</a>")
-			.append("		&nbsp;")
-			.append("		<a href=\"/ecommerce-web/admin/categoria/lista-taglib.jsp\">Voltar</a>")
-			.append("	</body>")
-			.append("</html>");
-		out.println(String.format(resposta.toString(), acao));
+	private void feedback(String acao, HttpServletRequest req, HttpServletResponse resp) 
+			throws IOException, ServletException {
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/admin/categoria/feedback.jsp");
+		req.setAttribute("acao", acao);
+		dispatcher.forward(req, resp);
 	}
 
 }

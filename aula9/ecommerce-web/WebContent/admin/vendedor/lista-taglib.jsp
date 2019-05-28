@@ -85,7 +85,7 @@
 <script>
 	const confirmaExclusao = (id) => {
 		if (confirm('Deseja excluir este vendedor?')) {
-			irPara('/ecommerce-web/admin/vendedor/excluir?id=' + id);
+			irPara('/ecommerce-web/admin/vendedor?id=' + id);
 		}
 	};
 </script>

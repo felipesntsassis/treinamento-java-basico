@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html>
@@ -38,7 +39,7 @@
 						<a class="dropdown-item" href="/ecommerce-web/admin/categoria/lista-taglib.jsp">
 							Categorias
 						</a>
-						<a class="dropdown-item" href="/ecommerce-web/admin/cliente/lista-taglib.jsp">
+						<a class="dropdown-item" href="/ecommerce-web/mvc?logica=ListarCliente">
 							Clientes
 						</a>
 						<a class="dropdown-item" href="/ecommerce-web/admin/produto/lista-taglib.jsp">
@@ -65,3 +66,15 @@
 	</nav>
 	
 	<div class="container">
+		<c:if test="${not empty feedback}">
+			<div class="row">
+				<div class="col-12 justify-content-center">
+					<div class="alert alert-${feedback.tipoFeedback.estilo} alert-dismissible fade show" role="alert">
+						${feedback.mensagem}
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</c:if>

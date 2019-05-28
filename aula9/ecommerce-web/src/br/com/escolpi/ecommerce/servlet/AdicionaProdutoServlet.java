@@ -1,8 +1,8 @@
 package br.com.escolpi.ecommerce.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import br.com.escolpi.ecommerce.jdbc.dao.ProdutoDao;
 import br.com.escolpi.ecommerce.modelo.Categoria;
 import br.com.escolpi.ecommerce.modelo.Produto;
+import br.com.escolpi.ecommerce.util.NumberUtil;
 
 /**
  * Servlet implementation class ProdutoServlet
@@ -26,9 +27,9 @@ public class AdicionaProdutoServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		String idRequest = request.getParameter("id");
+		String idRequest = req.getParameter("id");
 
 		if (idRequest == null || idRequest == "") {
 			throw new IllegalArgumentException("Parâmetro ID é obrigatório");
@@ -36,7 +37,7 @@ public class AdicionaProdutoServlet extends HttpServlet {
 
 		dao.remover(Long.valueOf(idRequest));
 
-		feedback("removido", response);
+		feedback("removido", req, resp);
 	}
 
 	/**
@@ -57,8 +58,7 @@ public class AdicionaProdutoServlet extends HttpServlet {
 		produto.setDescricao(req.getParameter("descricao"));
 		produto.setCategoria(new Categoria(Long.valueOf(req.getParameter("categoria"))));
 		produto.setQuantidade(Integer.valueOf(req.getParameter("quantidade")));
-		Double preco = Double.valueOf(req.getParameter("preco"));
-		produto.setPreco(preco);
+		produto.setPreco(NumberUtil.parseDouble(req.getParameter("preco")));
 
 		if (produto.getId() != null && produto.getId() > 0) {
 			dao.alterar(produto);
@@ -67,23 +67,14 @@ public class AdicionaProdutoServlet extends HttpServlet {
 			dao.adicionar(produto);
 		}
 
-		feedback(acao, resp);
+		feedback(acao, req, resp);
 	}
 
-	private void feedback(String acao, HttpServletResponse resp) throws IOException {
-		resp.addHeader("Content-Type", "text/html; charset=UTF-8");
-		PrintWriter out = resp.getWriter();
-		StringBuilder resposta = new StringBuilder();
-		resposta
-			.append("<html>")
-			.append("	<body>")
-			.append("		<h3>Produto %s com sucesso!</h3>")
-			.append("		<a href=\"/ecommerce-web/admin/produto/editar-taglib.jsp\">Novo Produto</a>")
-			.append("		&nbsp;")
-			.append("		<a href=\"/ecommerce-web/admin/produto/lista-taglib.jsp\">Voltar</a>")
-			.append("	</body>")
-			.append("</html>");
-		out.println(String.format(resposta.toString(), acao));
+	private void feedback(String acao, HttpServletRequest req, HttpServletResponse resp) 
+			throws IOException, ServletException {
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/admin/produto/feedback.jsp");
+		req.setAttribute("acao", acao);
+		dispatcher.forward(req, resp);
 	}
 
 }

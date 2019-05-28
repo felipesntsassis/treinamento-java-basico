@@ -1,8 +1,8 @@
 package br.com.escolpi.ecommerce.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -55,7 +55,7 @@ public class AdicionaVendedorServlet extends HttpServlet {
 			dao.adicionar(vendedor);
 		}
 
-		feedback(acao, resp);
+		feedback(acao, req, resp);
 	}
 
 	@Override
@@ -65,22 +65,13 @@ public class AdicionaVendedorServlet extends HttpServlet {
 			throw new IllegalArgumentException("Parâmetro ID é obrigatório");
 		
 		dao.remover(Long.valueOf(req.getParameter("id")));
-		feedback("excluído", resp);
+		feedback("excluído", req, resp);
 	}
 
-	private void feedback(String acao, HttpServletResponse resp) throws IOException {
-		resp.addHeader("Content-Type", "text/html; charset=UTF-8");
-		PrintWriter out = resp.getWriter();
-		StringBuilder resposta = new StringBuilder();
-		resposta
-			.append("<html>")
-			.append("	<body>")
-			.append("		<h3>Vendedor %s com sucesso!</h3>")
-			.append("		<a href=\"/ecommerce-web/admin/vendedor/editar-taglib.jsp\">Novo Vendedor</a>")
-			.append("		&nbsp;")
-			.append("		<a href=\"/ecommerce-web/admin/vendedor/lista-taglib.jsp\">Voltar</a>")
-			.append("	</body>")
-			.append("</html>");
-		out.println(String.format(resposta.toString(), acao));
+	private void feedback(String acao, HttpServletRequest req, HttpServletResponse resp) 
+			throws IOException, ServletException {
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/admin/vendedor/feedback.jsp");
+		req.setAttribute("acao", acao);
+		dispatcher.forward(req, resp);
 	}
 }

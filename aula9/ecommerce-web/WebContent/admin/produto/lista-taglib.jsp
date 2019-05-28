@@ -83,7 +83,7 @@
 <script>
 	const confirmaExclusao = (id) => {
 		if (confirm('Deseja excluir este Produto?')) {
-			irPara('/ecommerce-web/admin/produto/excluir?id=' + id);
+			irPara('/ecommerce-web/admin/produto?id=' + id);
 		}
 	};
 </script>
