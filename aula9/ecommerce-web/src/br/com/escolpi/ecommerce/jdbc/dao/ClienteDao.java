@@ -126,6 +126,7 @@ public class ClienteDao extends GenericDao<Cliente> {
 		dataNascimento.setTime(rs.getDate("data_nascimento"));
 		cliente.setDataNascimento(dataNascimento);
 		cliente.setEnderecosDeEntrega(enderecoDao.listarPorClienteId(cliente.getId()));
+		
 	
 		return cliente;
 	}

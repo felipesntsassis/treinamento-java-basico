@@ -20,6 +20,7 @@ public class ControllerServlet extends HttpServlet {
 	@SuppressWarnings("rawtypes")
 	protected void service(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
 		String parametro = req.getParameter("logica");
 
 		try {

@@ -8,7 +8,7 @@
 <c:import url="/cabecalho.jsp"/>
 
 <h3>${edicao ? "Editar" : "Cadastrar"} Cliente</h3>
-<form action="/ecommerce-web/sistema?logica=SalvarCliente" method="POST" autocomplete="off">
+<form action="/ecommerce-web/mvc?logica=SalvarCliente" method="POST" autocomplete="off">
 	<c:if test="${edicao}">
 		<input type="hidden" name="id" value="${cliente.id}">
 	</c:if>
@@ -40,7 +40,7 @@
 		</div>
 	</div>
 	<button type="button" class="btn btn-outline-secondary mr-2" 
-		onclick="irPara('/ecommerce-web/sistema?logica=ListarCliente');" tabindex="-1">
+		onclick="irPara('/ecommerce-web/mvc?logica=ListarCliente');" tabindex="-1">
 		<i class="fa fa-reply"></i> Voltar
 	</button>
 	<button type="submit" class="btn btn-success">
