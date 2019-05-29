@@ -14,7 +14,6 @@ public class Endereco {
 	private Estados estado;
 	private String municipio;
 	private boolean enderecoPrincipal;
-	private String enderecoFormatado;
 
 	public Long getId() {
 		return id;

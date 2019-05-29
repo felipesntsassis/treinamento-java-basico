@@ -22,7 +22,7 @@
 <div class="row">
 	<div class="col-12">
 		<div class="table-responsive-sm">
-			<display:table class="table table-striped table-hover" list="${clientes}" pagesize="10" requestURI="/ecommerce-web/mvc?logica=ListarCliente">
+			<display:table list="${clientes}" pagesize="10" requestURI="/ecommerce-web/mvc?logica=ListarCliente">
 				<display:column property="entity.nome" title="Nome"/>
 				<display:column property="entity.email" title="E-mail"/>
 				<display:column property="entity.dataNascimento" title="Data de Nascimento" 
@@ -95,7 +95,7 @@
 		// Evento para o botão "Endereços"
 		$('.btn-enderecos').on('click', (event) => {
 			event.preventDefault();
-			irPara('/ecommerce-web/mvc?logica=EditarEndereco&id=' + $(event.currentTarget).data('id'));
+			irPara('/ecommerce-web/mvc?logica=ListarEndereco&clienteId=' + $(event.currentTarget).data('id'));
 		});
 
 		// Evento para o botão "Excluir"

@@ -169,4 +169,28 @@ public class EnderecoDao extends GenericDao<Endereco> {
 		return endereco;
 	}
 
+	public Endereco obterEnderecoPrincipal(Long clienteId) {
+		Endereco endereco = new Endereco();
+		String sql = "SELECT * FROM enderecos WHERE endereco_principal = ? AND cliente_id = ?";
+
+		try {
+			PreparedStatement stmt = openConnection().prepareStatement(sql);
+			stmt.setBoolean(1, true);
+			stmt.setLong(2, clienteId);
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				endereco = popularEntidade(rs);
+			}
+
+			stmt.close();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			closeConnection();
+		}
+
+		return endereco;
+	}
+
 }
