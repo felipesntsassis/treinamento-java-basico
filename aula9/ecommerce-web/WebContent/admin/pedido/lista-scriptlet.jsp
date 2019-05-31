@@ -1,12 +1,12 @@
-<%@page import="br.com.escolpi.ecommerce.modelo.ItemPedido"%>
-<%@page import="br.com.escolpi.ecommerce.jdbc.dao.ItemPedidoDao"%>
-<%@page import="br.com.escolpi.ecommerce.jdbc.dao.PedidoDao"%>
-<%@page import="br.com.escolpi.ecommerce.modelo.Pedido"%>
-<%@page import="br.com.escolpi.ecommerce.util.DateUtil"%>
-<%@page import="br.com.escolpi.ecommerce.util.NumberUtil"%>
-<%@page import="java.util.Calendar"%>
-<%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="br.com.escolpi.ecommerce.modelo.ItemPedido" %>
+<%@ page import="br.com.escolpi.ecommerce.jdbc.dao.ItemPedidoDao" %>
+<%@ page import="br.com.escolpi.ecommerce.jdbc.dao.PedidoDao" %>
+<%@ page import="br.com.escolpi.ecommerce.modelo.Pedido" %>
+<%@ page import="br.com.escolpi.ecommerce.util.DateUtil" %>
+<%@ page import="br.com.escolpi.ecommerce.util.NumberUtil" %>
+<%@ page import="java.util.Calendar" %>
+<%@ page import="java.util.List" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -38,9 +38,9 @@
 
 					if (pedidos != null && pedidos.size() > 0) {
 						for (Pedido pedido : pedidos) {
-				%>
+				 %>
 						<tr>
-							<td><%=DateUtil.parseToString(pedido.getDataPedido(), "dd/MM/yyyy")%></td>
+							<td><%=DateUtil.parseToString(pedido.getDataPedido(), "dd/MM/yyyy") %></td>
 							<td>
 								<table border="1">
 									<tbody>
@@ -82,17 +82,17 @@
 															pedido.setItensPedido(itemPedidoDao.listarPorPedido(pedido.getId()));
 															if (pedido.getItensPedido() != null && pedido.getItensPedido().size() > 0) {
 																for(ItemPedido item : pedido.getItensPedido()) {
-														%>
+														 %>
 																	<tr>
-																		<td><%=item.getProduto().getDescricao()%></td>
-																		<td><%=NumberUtil.formatarMoeda(item.getProduto().getPreco(), true)%></td>
-																		<td><%=item.getQuantidade()%></td>
-																		<td><%=NumberUtil.formatarMoeda(item.getValor(), true)%></td>
+																		<td><%=item.getProduto().getDescricao() %></td>
+																		<td><%=NumberUtil.formatarMoeda(item.getProduto().getPreco(), true) %></td>
+																		<td><%=item.getQuantidade() %></td>
+																		<td><%=NumberUtil.formatarMoeda(item.getValor(), true) %></td>
 																	</tr>
 														<%
 																}
 															} else {
-														%>
+														 %>
 															<tr>
 																<td colspan="4" align="center">
 																	<em>Este pedido não possui ítens.</em>
@@ -100,7 +100,7 @@
 															</tr>
 														<%
 															}
-														%>
+														 %>
 													</tbody>
 												</table>
 											</td>
@@ -117,11 +117,11 @@
 									Cancelar
 								</button>
 								<br>
-								<button type="button" onclick="irPara('/ecommerce-web/admin/pedido/editar-scriptlet.jsp?id=<%=pedido.getId()%>')">
+								<button type="button" onclick="irPara('/ecommerce-web/admin/pedido/editar-scriptlet.jsp?id=<%=pedido.getId() %>')">
 									Editar
 								</button>
 								<br>
-								<button type="button" onclick="confirmaExclusao(<%=pedido.getId()%>)">
+								<button type="button" onclick="confirmaExclusao(<%=pedido.getId() %>)">
 									Excluir
 								</button>
 							</td>
@@ -129,7 +129,7 @@
 				<%
 						}
 					} else {
-				%>
+				 %>
 					<tr>
 						<td colspan="3" align="center">
 							<em>Nenhum Pedido Cadastrado</em>
@@ -137,7 +137,7 @@
 					</tr>
 				<%
 					}
-				%>
+				 %>
 			</tbody>
 		</table>
 	</body>

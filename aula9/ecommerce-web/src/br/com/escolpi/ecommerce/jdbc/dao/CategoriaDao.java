@@ -114,4 +114,24 @@ public class CategoriaDao extends GenericDao<Categoria> {
 		return categoria;
 	}
 
+	public boolean categoriaReferenciadaEmProdutos(Long id) {
+		String sql = "SELECT COUNT(*) FROM produtos WHERE categoria_id = ?";
+		int total = 0;
+
+		try {
+			PreparedStatement stmt = openConnection().prepareStatement(sql);
+			stmt.setLong(1, id);
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next())
+				total = rs.getInt(1);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			closeConnection();
+		}
+
+		return total > 0;
+	}
+
 }

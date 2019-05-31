@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html>
@@ -27,25 +27,29 @@
 		</button>
 		<div class="collapse navbar-collapse" id="menu-principal">
 			<ul class="navbar-nav">
-				<li class="nav-item active">
+				<li class="nav-item ${empty modulo ? 'active' : ''}">
 					<a class="nav-link" href="/ecommerce-web/">Início <span class="sr-only">(current)</span></a>
 				</li>
-				<li class="nav-item dropdown">
+				<li class="nav-item dropdown ${not empty modulo ? 'active' : ''}">
 					<a class="nav-link dropdown-toggle" href="#" id="menu-cadastros"
 						role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						Cadastros
 					</a>
 					<div class="dropdown-menu" aria-labelledby="menu-cadastros">
-						<a class="dropdown-item" href="/ecommerce-web/admin/categoria/lista-taglib.jsp">
+						<a class="dropdown-item ${modulo eq 'categoria' ? 'active' : '' }" 
+							href="/ecommerce-web/mvc?logica=ListarCategoria">
 							Categorias
 						</a>
-						<a class="dropdown-item" href="/ecommerce-web/mvc?logica=ListarCliente">
+						<a class="dropdown-item ${modulo eq 'cliente' ? 'active' : '' }" 
+							href="/ecommerce-web/mvc?logica=ListarCliente">
 							Clientes
 						</a>
-						<a class="dropdown-item" href="/ecommerce-web/admin/produto/lista-taglib.jsp">
+						<a class="dropdown-item ${modulo eq 'produto' ? 'active' : '' }" 
+							href="/ecommerce-web/mvc?logica=ListarProduto">
 							Produtos
 						</a>
-						<a class="dropdown-item" href="/ecommerce-web/admin/vendedor/lista-taglib.jsp">
+						<a class="dropdown-item ${modulo eq 'vendedor' ? 'active' : '' }" 
+							href="/ecommerce-web/mvc?logica=ListarVendedor">
 							Vendedores
 						</a>
 					</div>

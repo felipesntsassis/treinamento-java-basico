@@ -25,4 +25,5 @@ const converterParaFloat = (str) => {
 
 const iniciarMascaras = () => {
 	$('.moeda').mask('#.##0,00', {reverse: true});
+	$('.porcentagem').mask('#,00', {reverse: true});
 }

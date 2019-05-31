@@ -121,4 +121,24 @@ public class VendedorDao extends GenericDao<Vendedor> {
 		return vendedor;
 	}
 
+	public boolean temPedidosAtendidos(Long id) {
+		String sql = "SELECT COUNT(*) FROM pedidos WHERE vendedor_id = ?";
+		int total = 0;
+
+		try {
+			PreparedStatement stmt = openConnection().prepareStatement(sql);
+			stmt.setLong(1, id);
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next())
+				total = rs.getInt(1);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			closeConnection();
+		}
+
+		return total > 0;
+	}
+
 }

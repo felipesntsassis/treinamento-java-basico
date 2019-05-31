@@ -1,5 +1,5 @@
-<%@ tag import="br.com.escolpi.ecommerce.enumerador.Estados"%>
-<%@ tag language="java" pageEncoding="UTF-8"%>
+<%@ tag import="br.com.escolpi.ecommerce.enumerador.Estados" %>
+<%@ tag language="java" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%@ attribute name="endereco" required="true" type="br.com.escolpi.ecommerce.modelo.Endereco" %>

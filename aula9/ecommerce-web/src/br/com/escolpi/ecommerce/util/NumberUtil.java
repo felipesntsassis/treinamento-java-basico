@@ -25,7 +25,7 @@ public class NumberUtil {
 		NumberFormat nf = DecimalFormat.getInstance(localeBr);
 		nf.setMinimumFractionDigits(2);
 		nf.setMaximumFractionDigits(2);
-		nf.setGroupingUsed(false);
+		nf.setGroupingUsed(true);
 
 		return (comSimbolo ? "R$ " : "") + nf.format(numero);
 	}

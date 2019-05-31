@@ -133,4 +133,24 @@ public class ProdutoDao extends GenericDao<Produto> {
 		return produto;
 	}
 
+	public boolean produtoConsumidoPorItensDePedidos(Long id) {
+		String sql = "SELECT COUNT(*) FROM itens_pedidos WHERE produto_id = ?";
+		int total = 0;
+
+		try {
+			PreparedStatement stmt = openConnection().prepareStatement(sql);
+			stmt.setLong(1, id);
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next())
+				total = rs.getInt(1);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			closeConnection();
+		}
+
+		return total > 0;
+	}
+
 }

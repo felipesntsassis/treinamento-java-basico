@@ -2,20 +2,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<c:if test="${empty param.id }">
-	<jsp:useBean id="vendedor" class="br.com.escolpi.ecommerce.modelo.Vendedor"/>
-</c:if>
-<c:if test="${not empty param.id and param.id > 0}">
-	<jsp:useBean id="dao" class="br.com.escolpi.ecommerce.jdbc.dao.VendedorDao"/>
-	<c:set var="vendedor" value="${dao.obter(param.id)}"/>
-</c:if>
-
 <c:set var="edicao" value="${not empty vendedor.id and vendedor.id > 0}"/>
 
 <c:import url="/cabecalho.jsp"/>
 
 <h3>${edicao ? "Editar" : "Cadastrar"} Vendedor</h3>
-<form action="/ecommerce-web/admin/vendedor" method="POST">
+<form action="/ecommerce-web/mvc?logica=SalvarVendedor" method="POST">
 	<c:if test="${edicao}">
 		<input type="hidden" name="id" value="${vendedor.id}">
 	</c:if>
@@ -45,7 +37,7 @@
 			<div class="input-group">
 				<fmt:formatNumber var="percentualComissao" value="${vendedor.percentualComissao}"
 					type="number" minFractionDigits="2" maxFractionDigits="2"/>
-				<input type="text" name="percComissao" id="txt-perc-comissao" class="form-control"
+				<input type="text" name="percComissao" id="txt-perc-comissao" class="form-control porcentagem"
 					 value="${percentualComissao}" maxlength="5" required>
 				<div class="input-group-append">
 					<div class="input-group-text">%</div>
@@ -53,12 +45,17 @@
 			</div>
 		</div>
 	</div>
-	<button type="button" class="btn btn-outline-secondary mr-2" onclick="irPara('lista-taglib.jsp');" tabindex="-1">
+	<button type="button" class="btn btn-outline-secondary mr-2" 
+		onclick="irPara('/ecommerce-web/mvc?logica=ListarVendedor');" tabindex="-1">
 		<i class="fa fa-reply"></i> Voltar
 	</button>
 	<button type="submit" class="btn btn-success">
 		<i class="fa fa-save"></i> Salvar
 	</button>
 </form>
+
+ <script>
+	$(() => iniciarMascaras())
+</script>
 
 <c:import url="/rodape.jsp"/>

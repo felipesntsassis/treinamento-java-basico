@@ -26,7 +26,7 @@ public class ExcluirClienteLogic implements Logica {
 		Set<Endereco> enderecos = enderecoDao.listarPorClienteId(clienteId);
 		enderecos.forEach(endereco -> enderecoDao.remover(endereco.getId()));
 		clienteDao.remover(clienteId);
-		
+
 		req.setAttribute("feedback", new Feedback(TipoFeedback.SUCESSO, 
 				"Cliente excluído com sucesso!"));
 

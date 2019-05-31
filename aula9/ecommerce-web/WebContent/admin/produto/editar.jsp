@@ -1,24 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
-<c:if test="${empty param.id}">
-	<jsp:useBean id="produto" class="br.com.escolpi.ecommerce.modelo.Produto"/>
-</c:if>
-<c:if test="${not empty param.id and param.id > 0 }">
-	<jsp:useBean id="dao" class="br.com.escolpi.ecommerce.jdbc.dao.ProdutoDao"/>
-	<c:set var="produto" value="${dao.obter(param.id)}"/>
-</c:if>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="escolpi" %>
 
 <c:set var="edicao" value="${not empty param.id and param.id > 0 }"/>
-
-<jsp:useBean id="categoriaDao" class="br.com.escolpi.ecommerce.jdbc.dao.CategoriaDao"/>
-<c:set var="categorias" value="${categoriaDao.listar()}"/>
 
 <c:import url="/cabecalho.jsp"/>
 
 <h3>${edicao ? 'Editar' : 'Cadastrar'} Produto</h3>
-<form action="/ecommerce-web/admin/produto" method="POST">
+<form action="/ecommerce-web/mvc?logica=SalvarProduto" method="POST">
 	<c:if test="${edicao}">
 		<input type="hidden" name="id" value="${produto.id}">
 	</c:if>
@@ -35,15 +25,7 @@
 		</div>
 		<div class="form-group col-12 col-lg-6">
 			<label for="combo-categoria" class="required">Categoria:</label>
-			<select id="combo-categoria" name="categoria" class="form-control" required>
-				<option ${!edicao ? 'selected' : ''}>Selecione</option>
-				<c:forEach items="${categorias}" var="categoria">
-					<option value="${categoria.id}" 
-						${edicao and produto.categoria.id == categoria.id ? 'selected': ''}>
-						${categoria.descricao}
-					</option>
-				</c:forEach>
-			</select>
+			<escolpi:comboBox id="combo-categoria" name="categoria" items="${categorias}" entity="${produto.categoria}"/>
 		</div>
 		<div class="form-group col-12 col-lg-3">
 			<label for="txt-quantidade" class="required">Quantidade:</label>
@@ -63,7 +45,8 @@
 			</div>
 		</div>
 	</div>
-	<button type="button" class="btn btn-outline-secondary mr-2" onclick="irPara('lista-taglib.jsp');" tabindex="-1">
+	<button type="button" class="btn btn-outline-secondary mr-2" 
+		onclick="irPara('/ecommerce-web/mvc?logica=ListarProduto');" tabindex="-1">
 		<i class="fa fa-reply"></i> Voltar
 	</button>
 	<button type="submit" class="btn btn-success">

@@ -1,8 +1,8 @@
-<%@page import="br.com.escolpi.ecommerce.util.NumberUtil"%>
-<%@page import="br.com.escolpi.ecommerce.util.DateUtil"%>
-<%@page import="br.com.escolpi.ecommerce.jdbc.dao.VendedorDao"%>
-<%@page import="br.com.escolpi.ecommerce.modelo.Vendedor"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="br.com.escolpi.ecommerce.util.NumberUtil" %>
+<%@ page import="br.com.escolpi.ecommerce.util.DateUtil" %>
+<%@ page import="br.com.escolpi.ecommerce.jdbc.dao.VendedorDao" %>
+<%@ page import="br.com.escolpi.ecommerce.modelo.Vendedor" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 	<html>
 	<head>
@@ -21,7 +21,7 @@
 			}
 
 			boolean edicao = (vendedor.getId() != null && vendedor.getId() > 0);
-		%>
+		 %>
 		<h3><%=edicao ? "Editar" : "Cadastrar" %> Vendedor</h3>
 		<form action="/ecommerce-web/admin/vendedor" method="POST">
 			<% if (edicao) { %>
@@ -46,7 +46,7 @@
 				if (edicao) {
 					percentualComissao = NumberUtil.formatarPercentual(vendedor.getPercentualComissao(), false);
 				}
-			%>
+			 %>
 			<p>
 				<label>* Percentual de Comissão:</label><br>
 				<input type="text" name="percComissao" value="<%=edicao ? percentualComissao : "" %>" maxlength="5" required> %

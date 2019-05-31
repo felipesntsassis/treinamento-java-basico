@@ -1,10 +1,10 @@
-<%@page import="java.util.Locale"%>
-<%@page import="java.text.NumberFormat"%>
-<%@page import="javax.swing.text.NumberFormatter"%>
-<%@page import="br.com.escolpi.ecommerce.modelo.Produto"%>
-<%@page import="java.util.List"%>
-<%@page import="br.com.escolpi.ecommerce.jdbc.dao.ProdutoDao"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.Locale" %>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="javax.swing.text.NumberFormatter" %>
+<%@ page import="br.com.escolpi.ecommerce.modelo.Produto" %>
+<%@ page import="java.util.List" %>
+<%@ page import="br.com.escolpi.ecommerce.jdbc.dao.ProdutoDao" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -36,32 +36,32 @@
 					List<Produto> produtos =  dao.listar();
 					
 					for (Produto produto : produtos) {
-				%>
+				 %>
 					<tr>
-						<td><%=produto.getDescricao()%></td>
-						<td><%=produto.getCategoria().getDescricao()%></td>
-						<td><%=produto.getQuantidade()%></td>
+						<td><%=produto.getDescricao() %></td>
+						<td><%=produto.getCategoria().getDescricao() %></td>
+						<td><%=produto.getQuantidade() %></td>
 						<%
 							NumberFormat nf = NumberFormat.getInstance();
 							nf.setMinimumFractionDigits(2);
 							nf.setMaximumFractionDigits(2);
 							String preco = nf.format(produto.getPreco());
-						%>
-						<td><%=preco%></td>
+						 %>
+						<td><%=preco %></td>
 						<td>
 							<button type="button" 
-								onclick="irPara('/ecommerce-web/admin/produto/editar-scriptlet.jsp?id=<%=produto.getId()%>')">
+								onclick="irPara('/ecommerce-web/admin/produto/editar-scriptlet.jsp?id=<%=produto.getId() %>')">
 								Editar
 							</button>
 							<br>
-							<button type="button" onclick="confirmaExclusao(<%=produto.getId()%>)">
+							<button type="button" onclick="confirmaExclusao(<%=produto.getId() %>)">
 								Excluir
 							</button>
 						</td>
 					</tr>
 				<%
 					}
-				%>
+				 %>
 			</tbody>
 		</table>
 	</body>

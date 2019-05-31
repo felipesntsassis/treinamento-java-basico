@@ -1,7 +1,7 @@
-<%@page import="br.com.escolpi.ecommerce.util.DateUtil"%>
-<%@page import="br.com.escolpi.ecommerce.jdbc.dao.ClienteDao"%>
-<%@page import="br.com.escolpi.ecommerce.modelo.Cliente"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="br.com.escolpi.ecommerce.util.DateUtil" %>
+<%@ page import="br.com.escolpi.ecommerce.jdbc.dao.ClienteDao" %>
+<%@ page import="br.com.escolpi.ecommerce.modelo.Cliente" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <!DOCTYPE html>
 	<html>
@@ -21,7 +21,7 @@
 			}
 
 			boolean edicao = (cliente.getId() != null && cliente.getId() > 0);
-		%>
+		 %>
 		<h3><%=edicao ? "Editar" : "Cadastrar" %> Cliente</h3>
 		<form action="/ecommerce-web/admin/cliente" method="POST">
 			<% if (edicao) { %>
@@ -46,7 +46,7 @@
 				if (edicao) {
 					dataNascimento = DateUtil.parseToString(cliente.getDataNascimento(), "dd/MM/yyyy");
 				}
-			%>
+			 %>
 			<p>
 				<label>* Data de Nascimento:</label><br>
 				<input type="text" name="dataNascimento" value="<%=dataNascimento %>" maxlength="100" required>

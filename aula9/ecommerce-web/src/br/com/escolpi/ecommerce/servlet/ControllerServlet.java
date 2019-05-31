@@ -21,6 +21,7 @@ public class ControllerServlet extends HttpServlet {
 	protected void service(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
+		req.setAttribute("modulo", getModulo(req));
 		String parametro = req.getParameter("logica");
 
 		try {
@@ -38,5 +39,9 @@ public class ControllerServlet extends HttpServlet {
 		return "br.com.escolpi.ecommerce.servlet.logic." 
 				+ logica[1].toLowerCase() + "." + parametro + "Logic";
 		
+	}
+
+	private String getModulo(HttpServletRequest req) {
+		return req.getParameter("logica").split("(?=\\p{Upper})")[1].toLowerCase();
 	}
 }

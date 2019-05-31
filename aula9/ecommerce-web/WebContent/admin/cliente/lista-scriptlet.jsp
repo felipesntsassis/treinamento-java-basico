@@ -1,9 +1,9 @@
-<%@ page import="java.util.List"%>
-<%@ page import="br.com.escolpi.ecommerce.util.DateUtil"%>
-<%@ page import="br.com.escolpi.ecommerce.modelo.Cliente"%>
-<%@ page import="br.com.escolpi.ecommerce.jdbc.dao.ClienteDao"%>
+<%@ page import="java.util.List" %>
+<%@ page import="br.com.escolpi.ecommerce.util.DateUtil" %>
+<%@ page import="br.com.escolpi.ecommerce.modelo.Cliente" %>
+<%@ page import="br.com.escolpi.ecommerce.jdbc.dao.ClienteDao" %>
 
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -35,7 +35,7 @@
 					List<Cliente> clientes =  dao.listar();
 					
 					for (Cliente cliente : clientes) {
-				%>
+				 %>
 					<tr>
 						<td><%=cliente.getNome() %></td>
 						<td><%=cliente.getEmail() %></td>
@@ -45,18 +45,18 @@
 						</td>
 						<td>
 							<button type="button" 
-								onclick="irPara('/ecommerce-web/admin/cliente/editar-scriptlet.jsp?id=<%=cliente.getId()%>')">
+								onclick="irPara('/ecommerce-web/admin/cliente/editar-scriptlet.jsp?id=<%=cliente.getId() %>')">
 								Editar
 							</button>
 							<br>
-							<button type="button" onclick="confirmaExclusao(<%=cliente.getId()%>)">
+							<button type="button" onclick="confirmaExclusao(<%=cliente.getId() %>)">
 								Excluir
 							</button>
 						</td>
 					</tr>
 				<%
 					}
-				%>
+				 %>
 			</tbody>
 		</table>
 	</body>

@@ -1,6 +1,6 @@
-<%@page import="br.com.escolpi.ecommerce.jdbc.dao.CategoriaDao"%>
-<%@page import="br.com.escolpi.ecommerce.modelo.Categoria"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="br.com.escolpi.ecommerce.jdbc.dao.CategoriaDao" %>
+<%@ page import="br.com.escolpi.ecommerce.modelo.Categoria" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 	<html>
 	<head>
@@ -19,7 +19,7 @@
 			}
 
 			boolean edicao = (categoria.getId() != null && categoria.getId() > 0);
-		%>
+		 %>
 		<h3><%=edicao ? "Editar" : "Cadastrar" %> Categoria</h3>
 		<form action="/ecommerce-web/admin/categoria" method="POST">
 			<% if (edicao) { %>

@@ -1,10 +1,10 @@
-<%@page import="br.com.escolpi.ecommerce.util.NumberUtil"%>
-<%@ page import="java.util.List"%>
-<%@ page import="br.com.escolpi.ecommerce.util.DateUtil"%>
-<%@ page import="br.com.escolpi.ecommerce.modelo.Vendedor"%>
-<%@ page import="br.com.escolpi.ecommerce.jdbc.dao.VendedorDao"%>
+<%@ page import="br.com.escolpi.ecommerce.util.NumberUtil" %>
+<%@ page import="java.util.List" %>
+<%@ page import="br.com.escolpi.ecommerce.util.DateUtil" %>
+<%@ page import="br.com.escolpi.ecommerce.modelo.Vendedor" %>
+<%@ page import="br.com.escolpi.ecommerce.jdbc.dao.VendedorDao" %>
 
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -36,26 +36,26 @@
 					List<Vendedor> vendedores =  dao.listar();
 					
 					for (Vendedor vendedor : vendedores) {
-				%>
+				 %>
 					<tr>
 						<td><%=vendedor.getNome() %></td>
 						<td><%=vendedor.getEmail() %></td>
 						<td><%=vendedor.getDepartamento() %></td>
-						<td><%=NumberUtil.formatarPercentual(vendedor.getPercentualComissao(), true)%></td>
+						<td><%=NumberUtil.formatarPercentual(vendedor.getPercentualComissao(), true) %></td>
 						<td>
 							<button type="button" 
-								onclick="irPara('/ecommerce-web/admin/vendedor/editar-scriptlet.jsp?id=<%=vendedor.getId()%>')">
+								onclick="irPara('/ecommerce-web/admin/vendedor/editar-scriptlet.jsp?id=<%=vendedor.getId() %>')">
 								Editar
 							</button>
 							<br>
-							<button type="button" onclick="confirmaExclusao(<%=vendedor.getId()%>)">
+							<button type="button" onclick="confirmaExclusao(<%=vendedor.getId() %>)">
 								Excluir
 							</button>
 						</td>
 					</tr>
 				<%
 					}
-				%>
+				 %>
 			</tbody>
 		</table>
 	</body>

@@ -1,9 +1,9 @@
-<%@page import="br.com.escolpi.ecommerce.modelo.Categoria"%>
-<%@page import="java.util.List"%>
-<%@page import="br.com.escolpi.ecommerce.jdbc.dao.CategoriaDao"%>
-<%@page import="br.com.escolpi.ecommerce.modelo.Produto"%>
-<%@page import="br.com.escolpi.ecommerce.jdbc.dao.ProdutoDao"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="br.com.escolpi.ecommerce.modelo.Categoria" %>
+<%@ page import="java.util.List" %>
+<%@ page import="br.com.escolpi.ecommerce.jdbc.dao.CategoriaDao" %>
+<%@ page import="br.com.escolpi.ecommerce.modelo.Produto" %>
+<%@ page import="br.com.escolpi.ecommerce.jdbc.dao.ProdutoDao" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 	<html>
 	<head>
@@ -22,7 +22,7 @@
 			}
 
 			boolean edicao = (produto.getId() != null && produto.getId() > 0);
-		%>
+		 %>
 		<h3><%=edicao ? "Editar" : "Cadastrar" %> Produto</h3>
 		<form action="/ecommerce-web/admin/produto" method="POST">
 			<% if (edicao) { %>
@@ -44,19 +44,19 @@
 						List<Categoria> opcoesCategoria = categoriaDao.listar();
 						
 						for(Categoria categoria : opcoesCategoria) {
-					%>
+					 %>
 						<option
-							value="<%=categoria.getId()%>" 
+							value="<%=categoria.getId() %>" 
 							<%=
 								edicao && produto.getCategoria().getId() == categoria.getId() 
 									? "selected": ""
-							%>
+							 %>
 						>
-							<%=categoria.getDescricao()%>
+							<%=categoria.getDescricao() %>
 						</option>
 					<%
 						}
-					%>
+					 %>
 				</select>
 			</p>
 			<p>
