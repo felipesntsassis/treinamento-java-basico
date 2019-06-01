@@ -7,7 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.escolpi.ecommerce.jdbc.dao.VendedorDao;
+import br.com.escolpi.ecommerce.jpa.repository.vendedor.VendedorRepository;
 import br.com.escolpi.ecommerce.modelo.Vendedor;
 import br.com.escolpi.ecommerce.servlet.logic.impl.Logica;
 import br.com.escolpi.ecommerce.util.DataTable;
@@ -17,8 +17,8 @@ public class ListarVendedorLogic implements Logica {
 
 	@Override
 	public String executa(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-		VendedorDao vendedorDao = new VendedorDao();
-		List<Vendedor> vendedores = vendedorDao .listar();
+		VendedorRepository repository = new VendedorRepository(ENTITY_MANAGER);
+		List<Vendedor> vendedores = repository .listarTodos();
 		List<DataTable<Vendedor>> dataTable = new ArrayList<>();
 
 		vendedores.forEach(vendedor -> {

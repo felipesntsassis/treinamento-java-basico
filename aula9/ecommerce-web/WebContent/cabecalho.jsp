@@ -44,6 +44,10 @@
 							href="/ecommerce-web/mvc?logica=ListarCliente">
 							Clientes
 						</a>
+						<a class="dropdown-item ${modulo eq 'departamento' ? 'active' : '' }" 
+							href="/ecommerce-web/mvc?logica=ListarDepartamento">
+							Departamentos
+						</a>
 						<a class="dropdown-item ${modulo eq 'produto' ? 'active' : '' }" 
 							href="/ecommerce-web/mvc?logica=ListarProduto">
 							Produtos

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.escolpi.ecommerce.jdbc.dao.VendedorDao;
+import br.com.escolpi.ecommerce.modelo.Departamento;
 import br.com.escolpi.ecommerce.modelo.Vendedor;
 
 @WebServlet("/admin/vendedor")
@@ -36,7 +37,7 @@ public class AdicionaVendedorServlet extends HttpServlet {
 
 		vendedor.setNome(req.getParameter("nome"));
 		vendedor.setEmail(req.getParameter("email"));
-		vendedor.setDepartamento(req.getParameter("departamento"));
+		vendedor.setDepartamento(new Departamento(Long.valueOf(req.getParameter("departamento"))));
 
 		try {
 			Double percentual = Double.valueOf(req.getParameter("percComissao").replace(",", "."));

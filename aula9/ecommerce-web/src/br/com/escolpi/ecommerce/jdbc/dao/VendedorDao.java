@@ -18,7 +18,7 @@ public class VendedorDao extends GenericDao<Vendedor> {
 			PreparedStatement stmt = openConnection().prepareStatement(sql);
 			stmt.setString(1, entidade.getNome());
 			stmt.setString(2, entidade.getEmail());
-			stmt.setString(3, entidade.getDepartamento());
+//			stmt.setString(3, entidade.getDepartamento());
 			stmt.setDouble(4, entidade.getPercentualComissao());
 
 			stmt.execute();
@@ -36,7 +36,7 @@ public class VendedorDao extends GenericDao<Vendedor> {
 			PreparedStatement stmt = openConnection().prepareStatement(sql);
 			stmt.setString(1, entidade.getNome());
 			stmt.setString(2, entidade.getEmail());
-			stmt.setString(3, entidade.getDepartamento());
+//			stmt.setString(3, entidade.getDepartamento());
 			stmt.setDouble(4, entidade.getPercentualComissao());
 			stmt.setLong(5, entidade.getId());
 
@@ -115,7 +115,7 @@ public class VendedorDao extends GenericDao<Vendedor> {
 		vendedor.setId(rs.getLong("id"));
 		vendedor.setNome(rs.getString("nome"));
 		vendedor.setEmail(rs.getString("email"));
-		vendedor.setDepartamento(rs.getString("departamento"));
+//		vendedor.setDepartamento(rs.getString("departamento"));
 		vendedor.setPercentualComissao(rs.getDouble("perc_comissao"));
 
 		return vendedor;

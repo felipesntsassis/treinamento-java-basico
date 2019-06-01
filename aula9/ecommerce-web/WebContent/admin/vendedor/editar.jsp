@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="escolpi" %>
 
 <c:set var="edicao" value="${not empty vendedor.id and vendedor.id > 0}"/>
 
@@ -29,8 +30,10 @@
 		</div>
 		<div class="form-group col-12 col-lg-6">
 			<label for="txt-departamento" class="required">Departamento:</label>
-			<input type="text" name="departamento" id="txt-departamento" class="form-control" 
-				value="${vendedor.departamento}" maxlength="100" required>
+			<escolpi:comboBox items="${departamentos}" entity="${vendedor.departamento}" 
+				name="departamento" id="combo-departamento" required="true"/>
+<!-- 			<input type="text" name="departamento" id="txt-departamento" class="form-control"  -->
+<%-- 				value="${vendedor.departamento}" maxlength="100" required> --%>
 		</div>
 		<div class="form-group col-12 col-lg-3">
 			<label for="txt-perc-comissao" class="required">Percentual de Comissão:</label>

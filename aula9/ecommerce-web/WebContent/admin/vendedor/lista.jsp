@@ -24,7 +24,7 @@
 			<display:table list="${vendedores}" pagesize="10" requestURI="/ecommerce-web/mvc?logica=ListarVendedor">
 				<display:column property="entity.nome" title="Nome"/>
 				<display:column property="entity.email" title="E-mail"/>
-				<display:column property="entity.departamento" title="Departamento"/>
+				<display:column property="entity.departamento.descricao" title="Departamento"/>
 				<display:column property="entity.percentualComissao" title="Perc. de Comissão"
 					decorator="br.com.escolpi.ecommerce.util.decorator.PercentualDecorator"/>
 				<display:column property="menu" title="Opções" class="text-center"

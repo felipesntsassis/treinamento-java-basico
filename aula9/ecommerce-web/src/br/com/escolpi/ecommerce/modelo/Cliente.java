@@ -6,13 +6,23 @@ import java.util.Set;
 
 public class Cliente extends Pessoa {
 
+	private Long id;
 	private Calendar dataNascimento;
 	private Set<Endereco> enderecosDeEntrega;
 
-	public Cliente() { }
+	public Cliente() {
+	}
 
 	public Cliente(Long id) {
 		this.setId(id);
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Calendar getDataNascimento() {
@@ -37,9 +47,7 @@ public class Cliente extends Pessoa {
 			enderecosDeEntrega.add(new Endereco());
 		}
 
-		return enderecosDeEntrega.stream()
-			.filter(endereco -> endereco.isEnderecoPrincipal())
-			.findFirst()
-			.orElse(new Endereco());
+		return enderecosDeEntrega.stream().filter(endereco -> endereco.isEnderecoPrincipal()).findFirst()
+				.orElse(new Endereco());
 	}
 }

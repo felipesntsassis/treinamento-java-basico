@@ -215,14 +215,21 @@ INSERT INTO clientes (nome, email, endereco, data_nascimento)
 INSERT INTO clientes (nome, email, endereco, data_nascimento) 
     VALUES('Alessandra Sebastiana Lopes', 'alessandrasebastianalopes@alemponte.com.br', 'Rua Beira Rio, 312, Centro Salto Grande/SP', '1997-11-04');
 
+DELETE FROM departamentos;
+ALTER TABLE departamentos AUTO_INCREMENT = 1;
 
+INSERT INTO departamentos (descricao) VALUES('Eletrônicos');
+INSERT INTO departamentos (descricao) VALUES('Games');
+INSERT INTO departamentos (descricao) VALUES('Moda');
+INSERT INTO departamentos (descricao) VALUES('Moda Infantil');
+INSERT INTO departamentos (descricao) VALUES('Casa & Decorações');
 
 DELETE FROM vendedores;
 ALTER TABLE vendedores AUTO_INCREMENT = 1;
 
-INSERT INTO vendedores (nome, email, departamento, perc_comissao)
-    VALUES('Enzo Sérgio Gonçalves', 'eenzosergiogoncalves@escolpi.com.br', 'Equipamentos Fiscais e Suporte', 0.15);
-INSERT INTO vendedores (nome, email, departamento, perc_comissao)
-    VALUES('Luan Luiz Filipe Jesus', 'luanljesus@escolpi.com.br', 'Computadores e Periféricos', 0.15);
-INSERT INTO vendedores (nome, email, departamento, perc_comissao)
-    VALUES('Pietra Elza Vieira', 'pietra.vieira@escolpi.com.br', 'Software e Suporte', 0.15);
+INSERT INTO vendedores (nome, email, departamento_id, perc_comissao)
+    VALUES('Enzo Sérgio Gonçalves', 'eenzosergiogoncalves@escolpi.com.br', 1, 0.15);
+INSERT INTO vendedores (nome, email, departamento_id, perc_comissao)
+    VALUES('Luan Luiz Filipe Jesus', 'luanljesus@escolpi.com.br', 2, 0.15);
+INSERT INTO vendedores (nome, email, departamento_id, perc_comissao)
+    VALUES('Pietra Elza Vieira', 'pietra.vieira@escolpi.com.br', 1, 0.15);
