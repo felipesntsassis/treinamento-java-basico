@@ -1,2 +1,4 @@
-/.metadata/
+.classpath
+.metadata/
+.settings/
 Servers/

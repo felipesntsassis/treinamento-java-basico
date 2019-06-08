@@ -5,6 +5,7 @@ TRUNCATE TABLE produtos;
 TRUNCATE TABLE categorias;
 TRUNCATE TABLE pedidos;
 TRUNCATE TABLE clientes;
+TRUNCATE TABLE departamentos;
 TRUNCATE TABLE vendedores;
 
 SET FOREIGN_KEY_CHECKS = 1;
@@ -196,30 +197,52 @@ INSERT INTO produtos (categoria_id, descricao, quantidade, preco) VALUES (40, 'M
 DELETE FROM clientes;
 ALTER TABLE clientes AUTO_INCREMENT = 1;
 
-INSERT INTO clientes (nome, email, endereco, data_nascimento) 
-    VALUES('Breno Vinicius Raimundo Assis', 'bbrenoviniciusraimundoassis@gabrielresende.com', 'Rua Sud Minucci, 928, Vila Boa Esperança, Ourinhos/SP', '1994-11-13');
-INSERT INTO clientes (nome, email, endereco, data_nascimento) 
-    VALUES('Valentina Mariane Sabrina Sales', 'vvalentinamarianesabrinasales@gmx.com.br', 'Rua Pedro Padovan, 943, Jardim Imperial, Ourinhos/SP', '1985-05-06');
-INSERT INTO clientes (nome, email, endereco, data_nascimento) 
-    VALUES('Vitor Danilo Nelson da Cruz', 'vitordanilonelsondacruz@humanfit.com.br', 'Rua Hugo Berlandi, 247, Jardim Ideal, Ourinhos/SP', '1999-05-03');
-INSERT INTO clientes (nome, email, endereco, data_nascimento) 
-    VALUES('Heloise Milena Lima', 'heloisemilenalima@robiel.com.br', 'Praça Deputado Leônidas Camarinha 13, 561, Centro, Santa Cruz do Rio Pardo/SP', '1999-07-02');
-INSERT INTO clientes (nome, email, endereco, data_nascimento) 
-    VALUES('Fernanda Giovanna Sabrina Monteiro', 'ffernandagiovannasabrinamonteiro@aerobravo.com.br', 'Rua Bárbara Abujamra, 671, Jardim Ouro Verde, Santa Cruz do Rio Pardo/SP', '1987-08-10');
-INSERT INTO clientes (nome, email, endereco, data_nascimento) 
-    VALUES('Ian Márcio Fernando Gonçalves', 'ianmarciofernandogoncalves_@asproplastic.com.br', 'Rua Três, 786, Jardim Nazareth, Santa Cruz do Rio Pardo/SP', '1998-10-10');
-INSERT INTO clientes (nome, email, endereco, data_nascimento) 
-    VALUES('Emanuel Mateus Leonardo Campos', 'emanuelmateusleonardocampos@terra.com.br', 'Rua Prudente de Morais 354-B, 796, Salto Grande/SP', '1986-01-01');
-INSERT INTO clientes (nome, email, endereco, data_nascimento) 
-    VALUES('Ian Pietro Danilo Nogueira', 'ianpietrodanilonogueira@bwmtrade.com', 'Avenida Ourinhos, 511, Centro, Salto Grande/SP', '1993-10-15');
-INSERT INTO clientes (nome, email, endereco, data_nascimento) 
-    VALUES('Alessandra Sebastiana Lopes', 'alessandrasebastianalopes@alemponte.com.br', 'Rua Beira Rio, 312, Centro Salto Grande/SP', '1997-11-04');
+INSERT INTO clientes (nome, email, data_nascimento) VALUES('Breno Vinicius Raimundo Assis', 'bbrenoviniciusraimundoassis@gabrielresende.com', '1994-11-13');
+INSERT INTO clientes (nome, email, data_nascimento) VALUES('Valentina Mariane Sabrina Sales', 'vvalentinamarianesabrinasales@gmx.com.br', '1985-05-06');
+INSERT INTO clientes (nome, email, data_nascimento) VALUES('Vitor Danilo Nelson da Cruz', 'vitordanilonelsondacruz@humanfit.com.br', '1999-05-03');
+INSERT INTO clientes (nome, email, data_nascimento) VALUES('Heloise Milena Lima', 'heloisemilenalima@robiel.com.br', '1999-07-02');
+INSERT INTO clientes (nome, email, data_nascimento) VALUES('Fernanda Giovanna Sabrina Monteiro', 'ffernandagiovannasabrinamonteiro@aerobravo.com.br', '1987-08-10');
+INSERT INTO clientes (nome, email, data_nascimento) VALUES('Ian Márcio Fernando Gonçalves', 'ianmarciofernandogoncalves_@asproplastic.com.br', '1998-10-10');
+INSERT INTO clientes (nome, email, data_nascimento) VALUES('Emanuel Mateus Leonardo Campos', 'emanuelmateusleonardocampos@terra.com.br', '1986-01-01');
+INSERT INTO clientes (nome, email, data_nascimento) VALUES('Ian Pietro Danilo Nogueira', 'ianpietrodanilonogueira@bwmtrade.com', '1993-10-15');
+INSERT INTO clientes (nome, email, data_nascimento) VALUES('Alessandra Sebastiana Lopes', 'alessandrasebastianalopes@alemponte.com.br', '1997-11-04');
+
+
+DELETE FROM enderecos;
+ALTER TABLE enderecos AUTO_INCREMENT = 1;
+INSERT INTO enderecos (cliente_id, cep, logradouro, numero, bairro, estado_id, municipio, endereco_principal)
+	VALUES (1, '19905385', 'Rua Dezesseis', '289', 'Conjunto Residencial Padre Eduardo Murante', 35, 'Ourinhos', true);
+INSERT INTO enderecos (cliente_id, cep, logradouro, numero, bairro, estado_id, municipio, endereco_principal)
+	VALUES (2, '19900260', 'Rua José Galvão', '226', 'Vila Moraes', 35, 'Ourinhos', true);
+INSERT INTO enderecos (cliente_id, cep, logradouro, numero, bairro, estado_id, municipio, endereco_principal)
+	VALUES (3, '19908140', 'Rua Osmar de Vecchi', '837', 'Parque Minas Gerais', 35, 'Ourinhos', true);
+INSERT INTO enderecos (cliente_id, cep, logradouro, numero, bairro, estado_id, municipio, endereco_principal)
+	VALUES (4, '19915405', 'Rua H', '371', 'Jardim Santa Catarina', 35, 'Ourinhos', true);
+INSERT INTO enderecos (cliente_id, cep, logradouro, numero, bairro, estado_id, municipio, endereco_principal)
+	VALUES (5, '19906503', 'Praça Vicentino Humberto Rosa', '883', 'Vila Soares', 35, 'Ourinhos', true);
+INSERT INTO enderecos (cliente_id, cep, logradouro, numero, bairro, estado_id, municipio, endereco_principal)
+	VALUES (6, '19906250', 'Avenida Amador Bueno', '832', 'Jardim dos Bandeirantes', 35, 'Ourinhos', true);
+INSERT INTO enderecos (cliente_id, cep, logradouro, numero, bairro, estado_id, municipio, endereco_principal)
+	VALUES (7, '19913570', 'Rua Rafael da Silva', '820', 'Conjunto Habitacional Ourinhos H', 35, 'Ourinhos', true);
+INSERT INTO enderecos (cliente_id, cep, logradouro, numero, bairro, estado_id, municipio, endereco_principal)
+	VALUES (8, '19905010', 'Rua Antônio Cruz', '987', 'Vila São José', 35, 'Ourinhos', true);;
+INSERT INTO enderecos (cliente_id, cep, logradouro, numero, bairro, estado_id, municipio, endereco_principal)
+	VALUES (9, '19902441', 'Rua Jandyra Gomes de Oliveira', '184', 'Vila São Silvestre', 35, 'Ourinhos', true);
 
 DELETE FROM departamentos;
 ALTER TABLE departamentos AUTO_INCREMENT = 1;
 
+INSERT INTO departamentos (descricao) VALUES('Automotivo');
+INSERT INTO departamentos (descricao) VALUES('Alimentação & Vida Saudável');
+INSERT INTO departamentos (descricao) VALUES('Casa & Decorações');
+INSERT INTO departamentos (descricao) VALUES('Casa & Construção');
 INSERT INTO departamentos (descricao) VALUES('Eletrônicos');
 INSERT INTO departamentos (descricao) VALUES('Games');
+INSERT INTO departamentos (descricao) VALUES('Livraria & Papelaria');
+INSERT INTO departamentos (descricao) VALUES('Informática');
+INSERT INTO departamentos (descricao) VALUES('Moda & Beleza');
+
+
 INSERT INTO departamentos (descricao) VALUES('Moda');
 INSERT INTO departamentos (descricao) VALUES('Moda Infantil');
 INSERT INTO departamentos (descricao) VALUES('Casa & Decorações');
@@ -232,4 +255,4 @@ INSERT INTO vendedores (nome, email, departamento_id, perc_comissao)
 INSERT INTO vendedores (nome, email, departamento_id, perc_comissao)
     VALUES('Luan Luiz Filipe Jesus', 'luanljesus@escolpi.com.br', 2, 0.15);
 INSERT INTO vendedores (nome, email, departamento_id, perc_comissao)
-    VALUES('Pietra Elza Vieira', 'pietra.vieira@escolpi.com.br', 1, 0.15);
+    VALUES('Pietra Elza Vieira', 'pietra.vieira@escolpi.com.br', 3, 0.15);

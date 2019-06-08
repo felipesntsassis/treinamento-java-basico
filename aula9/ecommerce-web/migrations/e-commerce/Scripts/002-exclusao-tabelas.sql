@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS `categorias`;
 DROP TABLE IF EXISTS `pedidos`;
 DROP TABLE IF EXISTS `clientes`;
 DROP TABLE IF EXISTS `enderecos`;
+DROP TABLE IF EXISTS `departamentos`;
 DROP TABLE IF EXISTS `vendedores`;
 
 SET FOREIGN_KEY_CHECKS = 1;
