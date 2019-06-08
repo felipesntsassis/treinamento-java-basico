@@ -46,14 +46,15 @@ CREATE TABLE `vendedores` (
   `email` varchar(255) COLLATE utf8_bin NOT NULL,
   `departamento_id` bigint(20) NOT NULL,
   `perc_comissao` decimal(10,2) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  CONSTRAINT `vendedores_departamentos_FK` FOREIGN KEY (`departamento_id`) REFERENCES `departamentos` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 CREATE TABLE `produtos` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `categoria_id` bigint(20) NOT NULL,
   `descricao` varchar(255) COLLATE utf8_bin NOT NULL,
-  `quantidade` int(11) NOT NULL 0,
+  `quantidade` int(11) NOT NULL DEFAULT 0,
   `preco` decimal(8,2) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `produtos_categorias_FK` (`categoria_id`),

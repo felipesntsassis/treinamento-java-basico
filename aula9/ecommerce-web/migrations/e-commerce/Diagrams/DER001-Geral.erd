@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<diagram version="1" name="DER001-Geral.erd" time="201903292237">
+<diagram version="1" name="DER001-Geral.erd" time="201906080815">
 	<entities>
 		<data-source id="mariaDB-169afecb60f-4ae1e7d11ab69042">
-			<entity id="1" name="categorias" fq-name="ecommerce.categorias" order="0" x="89" y="481">
+			<entity id="1" name="categorias" fq-name="ecommerce.categorias" order="0" x="816" y="344">
 				<path name="ecommerce"/>
 			</entity>
-			<entity id="2" name="clientes" fq-name="ecommerce.clientes" order="1" x="660" y="40">
+			<entity id="2" name="clientes" fq-name="ecommerce.clientes" order="1" x="816" y="30">
 				<path name="ecommerce"/>
 			</entity>
-			<entity id="3" name="pedidos" fq-name="ecommerce.pedidos" order="2" x="380" y="40">
+			<entity id="3" name="pedidos" fq-name="ecommerce.pedidos" order="2" x="419" y="82">
 				<path name="ecommerce"/>
 			</entity>
-			<entity id="4" name="produtos" fq-name="ecommerce.produtos" order="3" x="80" y="260">
+			<entity id="4" name="produtos" fq-name="ecommerce.produtos" order="3" x="419" y="249">
 				<path name="ecommerce"/>
 			</entity>
-			<entity id="5" name="vendedores" fq-name="ecommerce.vendedores" order="4" x="365" y="267">
+			<entity id="5" name="vendedores" fq-name="ecommerce.vendedores" order="4" x="816" y="177">
 				<path name="ecommerce"/>
 			</entity>
-			<entity id="6" name="itens_pedidos" fq-name="ecommerce.itens_pedidos" order="5" x="80" y="40">
+			<entity id="6" name="itens_pedidos" fq-name="ecommerce.itens_pedidos" order="5" x="36" y="171">
 				<path name="ecommerce"/>
 			</entity>
 		</data-source>
 	</entities>
+	<notes/>
 	<relations>
 		<relation name="produtos_categorias_FK" fq-name="ecommerce.produtos.produtos_categorias_FK" type="fk" pk-ref="1" fk-ref="4"/>
 		<relation name="pedidos_clientes_FK" fq-name="ecommerce.pedidos.pedidos_clientes_FK" type="fk" pk-ref="2" fk-ref="3"/>
@@ -29,5 +30,4 @@
 		<relation name="itens_pedidos_produtos_FK" fq-name="ecommerce.itens_pedidos.itens_pedidos_produtos_FK" type="fk" pk-ref="4" fk-ref="6"/>
 		<relation name="pedidos_vendedores_FK" fq-name="ecommerce.pedidos.pedidos_vendedores_FK" type="fk" pk-ref="5" fk-ref="3"/>
 	</relations>
-	<notes/>
 </diagram>
